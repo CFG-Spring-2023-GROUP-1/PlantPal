@@ -1,9 +1,18 @@
 import requests
+# to load .env
+from dotenv import load_dotenv
+import os
+
+# Load variables from .env file
+load_dotenv()
+
+api_key = os.getenv("RAPID_API_KEY")
+base_url = os.getenv("RAPID_API_URL")
 
 user_input = input('Please enter a house plant by common name or latin name.')
 
-url = "https://house-plants2.p.rapidapi.com/search"
-querystring = {"query":f"{user_input}"}
+url = f"{base_url}/search"
+querystring = {"query": f"{user_input}"}
 headers = {
     "X-RapidAPI-Key": "9d96a9d91dmsh416e36fcbc909b7p193dd9jsnfefa76b13d4c",
     "X-RapidAPI-Host": "house-plants2.p.rapidapi.com"
@@ -47,4 +56,4 @@ print(
     f'Growth speed: {plant_data["growth_speed"]}\n'
     f'Common diseases: {plant_data["common_diseases"]}\n'
     f'Image: {plant_data["image"]}\n'
-    )
+)
