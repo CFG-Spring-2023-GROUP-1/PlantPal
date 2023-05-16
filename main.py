@@ -17,7 +17,7 @@ headers = {
 response = requests.get(url, headers=headers, params=querystring)
 
 full_data = response.json()
-
+print(full_data)
 data = full_data[0]['item']
 
 
