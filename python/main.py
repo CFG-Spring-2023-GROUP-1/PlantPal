@@ -1,5 +1,3 @@
-import os
-from dotenv import load_dotenv
 import requests
 # to load .env
 from dotenv import load_dotenv
@@ -12,21 +10,20 @@ api_key = os.getenv("RAPID_API_KEY")
 base_url = os.getenv("RAPID_API_URL")
 
 load_dotenv()
-api_key = os.getenv('API_KEY')
 
 user_input = input('Please enter a house plant by common name or latin name.')
-
-url = f"{base_url}/search"
-querystring = {"query": f"{user_input}"}
+host = 'house-plants2.p.rapidapi.com'
+url = f"{base_url}search"
+querystring = {"query": user_input}
 headers = {
     "X-RapidAPI-Key": api_key,
-    "X-RapidAPI-Host": "house-plants2.p.rapidapi.com"
+    "X-RapidAPI-Host": host
 }
 
 response = requests.get(url, headers=headers, params=querystring)
-
+#
 full_data = response.json()
-# print(full_data)
+
 data = full_data[0]['item']
 
 
@@ -50,6 +47,7 @@ plant_data = {
     'image': data.get('Img', 'N/A')
 }
 
+
 print(
     f'Latin name: {plant_data["latin_name"]}\n'
     f'Common name(s): {plant_data["common_name"]}\n'
@@ -62,3 +60,4 @@ print(
     f'Common diseases: {plant_data["common_diseases"]}\n'
     f'Image: {plant_data["image"]}\n'
 )
+
