@@ -1,18 +1,23 @@
+import os
+from dotenv import load_dotenv
 import requests
+
+load_dotenv()
+api_key = os.getenv('API_KEY')
 
 user_input = input('Please enter a house plant by common name or latin name.')
 
 url = "https://house-plants2.p.rapidapi.com/search"
 querystring = {"query":f"{user_input}"}
 headers = {
-    "X-RapidAPI-Key": "9d96a9d91dmsh416e36fcbc909b7p193dd9jsnfefa76b13d4c",
+    "X-RapidAPI-Key": api_key,
     "X-RapidAPI-Host": "house-plants2.p.rapidapi.com"
 }
 
 response = requests.get(url, headers=headers, params=querystring)
 
 full_data = response.json()
-print(full_data)
+# print(full_data)
 data = full_data[0]['item']
 
 
