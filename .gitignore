@@ -1,0 +1,39 @@
+# Virtual environment
+venv/
+env/
+virtualenv/
+pipenv/
+pyenv/
+
+# Compiled Python files
+*.pyc
+*.pyo
+__pycache__/
+
+# IDE-specific files and directories
+.idea/
+.vscode/
+.pycproject/
+.pydevproject/
+
+# Logs and temporary files
+*.log
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Dependency and package files
+requirements.txt
+Pipfile
+Pipfile.lock
+poetry.lock
+
+# Configuration files
+.env
+.env.local
+.env.*.local
+
+# Exclude specific project files or directories
+# /path/to/file.ext
+# /path/to/directory/
