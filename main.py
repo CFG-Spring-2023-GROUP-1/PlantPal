@@ -12,7 +12,8 @@ headers = {
 response = requests.get(url, headers=headers, params=querystring)
 
 full_data = response.json()
-print(full_data)
+# print(full_data)
+
 data = full_data[0]['item']
 
 
@@ -20,7 +21,7 @@ def replace_none(stat):
     if stat is None:
         return 'N/A'
     else:
-        return data
+        return stat
 
 
 plant_data = {
@@ -32,7 +33,7 @@ plant_data = {
     'max_temp': data.get('Temperature max', {}),
     'min_temp': data.get('Temperature min', {}),
     'growth_speed': data.get('Growth', 'N/A'),
-    'common_diseases': replace_none(data.get("Disease", "N/A")),
+    'common_diseases': replace_none(data.get("Disease")),
     'image': data.get('Img', 'N/A')
 }
 
