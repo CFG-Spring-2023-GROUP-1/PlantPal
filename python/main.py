@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import requests
 # to load .env
 from dotenv import load_dotenv
@@ -13,7 +15,6 @@ load_dotenv()
 
 user_input = input('Please enter a house plant by common name or latin name.')
 host = 'house-plants2.p.rapidapi.com'
-
 url = f"{base_url}search"
 querystring = {"query": user_input}
 headers = {
@@ -61,4 +62,3 @@ print(
     f'Common diseases: {plant_data["common_diseases"]}\n'
     f'Image: {plant_data["image"]}\n'
 )
-
