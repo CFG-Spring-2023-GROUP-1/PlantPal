@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 import requests
 # to load .env
 from dotenv import load_dotenv
@@ -60,4 +62,3 @@ print(
     f'Common diseases: {plant_data["common_diseases"]}\n'
     f'Image: {plant_data["image"]}\n'
 )
-
