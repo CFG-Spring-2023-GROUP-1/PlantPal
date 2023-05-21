@@ -21,9 +21,14 @@ my_plants = []  # is this a dictionary or list - need to fill with data from DB
 for plant in my_plants:
     plant_name = ""
     water_frequency = ""
-    last_watered = ""
-    my_calendar_functions.describe_needs(plant_name, water_frequency, my_calendar_functions.days_between_watering(water_frequency))
+
+    days = my_calendar_functions.days_between_watering(water_frequency)
+
+    my_calendar_functions.days_between_watering(plant_name, water_frequency, days)
+
+    last_watered = my_calendar_functions.last_water(plant_name)
     my_calendar_functions.days_since_watered(last_watered)
-    my_calendar_functions.date_to_water("monstera", last_watered)
+
+    my_calendar_functions.date_to_water(plant_name, last_watered, days)
 
 
