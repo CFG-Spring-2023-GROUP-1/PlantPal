@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 
 def describe_needs(plant_name, water_frequency, days):
     """Describes how often the plant needs watering"""
-    print(f"A {plant_name.title()} needs watering {water_frequency} (every {days} days).")
+    print(f"Your {plant_name.title()} needs watering {water_frequency} (every {days} days).")
 
 
 def days_between_watering(water_frequency):
@@ -43,17 +43,6 @@ def date_to_water(plant_name, last_watered,days):
     print(f"You should next water your {plant_name.title()} on {water_due}.")
 
 
-# plant_name = "monstera"  # Get this and water_frequency from DB - how?
-# water_frequency = "regularly"
-#
-# days = days_between_watering(water_frequency)
-#
-# describe_needs(plant_name, water_frequency, days)
-#
-# last_watered = last_water(plant_name)
-# days_since_watered(last_watered)
-#
-# date_to_water(plant_name, last_watered, days)
 
 
 
