@@ -1,8 +1,8 @@
 import mysql.connector
 import json
 
-USER = 'root'
-PASSWORD = 'Hexgirl101!'
+USER = ''
+PASSWORD = ''
 HOST = 'localhost'
 
 # CONNECT TO DB
