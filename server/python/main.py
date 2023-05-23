@@ -12,11 +12,40 @@ base_url = os.getenv("RAPID_API_URL")
 
 load_dotenv()
 
+# remove plant from My Plants that matches select_plant user input
+def remove_from_my_plants(plants):
+    select_plant = input('Enter which plant you want to remove by scientific(latin) name.')
+    chosen_entry = [plant for plant in plants if plant[2] == select_plant] # select scientific name from the correct tuple
+    while select_plant != chosen_entry[0][2]:
+        print('Plant not found, please try again.')
+        select_plant = input('Enter which plant you want to remove.')
+    remove_plant(select_plant)
+
+# Show user each plant in their collection
+def display_my_plants():
+    plants = get_all_myplants()
+    if plants:
+        print(f'My Plants:')
+        for plant in plants:
+            print(plant)
+    elif not plants:
+        print('Your plant collection is empty.')
+        return
+
+
+
+    # ask user if they want to remove any plant from displayed collection
+    ask_remove_plant = input('Would you like to remove a plant from your collection? (y/n)')
+    if ask_remove_plant.lower() == 'y':
+        remove_from_my_plants(plants)
+
+
 user_input_plant = input('Please enter a house plant by common name or latin name,'
                          'or enter "My Plants" to view your plant collection.')
 
-# Haven't started on the remove_plant or display_my_plants logic in this file yet
-# plant_name = input("Enter the name of a plant to remove it from your collection: ")
+if user_input_plant.lower() == 'my plants':
+    display_my_plants()
+
 
 host = 'house-plants2.p.rapidapi.com'
 url = f"{base_url}search"
@@ -48,6 +77,7 @@ plant_data = {
     'image': data.get('Img', 'N/A')
 }
 
+# show user details of the plant they searched for
 def display_from_user_input(plant_data):
     return (
         f'Latin name: {plant_data["latin_name"]}\n'
@@ -64,6 +94,8 @@ def display_from_user_input(plant_data):
 
 print(display_from_user_input(plant_data))
 
+
+# if common_diseases in plant_data is not none, ask for user input on plant disease
 def ask_disease(plant_data):
     if plant_data['common_diseases'] == 'N/A':
         return None
@@ -77,6 +109,7 @@ def ask_disease(plant_data):
                 print('Disease entered not found. Please try again.')
 
 
+# ask user if they want to add searched for plant to My Plants
 def ask_add_plant(data, plant_id, user_input_disease=None):
     add_plant_question = input(f'Would you like to add {user_input_plant} to your My plants collection? Please enter "y" for yes, or "n" for no')
     if add_plant_question == 'n':
@@ -86,3 +119,4 @@ def ask_add_plant(data, plant_id, user_input_disease=None):
 
 
 ask_add_plant(data, plant_id, user_input_disease=ask_disease(plant_data))
+

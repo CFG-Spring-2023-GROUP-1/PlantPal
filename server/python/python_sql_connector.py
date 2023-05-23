@@ -5,6 +5,7 @@ USER = ''
 PASSWORD = ''
 HOST = 'localhost'
 
+
 # CONNECT TO DB
 def connect_to_plantpal_db(db_name):
     connection = mysql.connector.connect(
@@ -27,13 +28,13 @@ def get_all_myplants():
         db_name = 'PlantPal'
         db_connection = connect_to_plantpal_db(db_name)
         cur = db_connection.cursor()
-        print('connected to PlantPal')
 
         cur.execute('SELECT * FROM PlantDetails')
         result = cur.fetchall()
-        for plant in result:
-            print(plant)
+        # for plant in result:
+        #     print(plant)
         cur.close()
+        return result
     except mysql.connector.Error as err:
         print('Error. Unable to retrieve My Plants:', err)
     finally:
@@ -77,10 +78,9 @@ def add_plant(data, plant_id, user_input_disease):
 
 def remove_plant(plant_name):
     try:
-        db_name = 'MyPlants'
+        db_name = 'PlantDetails'
         db_connection = connect_to_plantpal_db(db_name)
         cur = db_connection.cursor()
-        print('connected to PlantPal')
 
         cur.execute('DELETE FROM PlantDetails WHERE name = %s', plant_name,)
         db_connection.commit()
