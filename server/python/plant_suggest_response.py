@@ -37,8 +37,7 @@ def print_plant_data(plant_query_url):
     # filter out plants with id > 3000 because only premium users can access them
     filtered_data = [plant for plant in data['data'] if plant['id'] <= 3000] 
     print_recommendations(filtered_data)
-    # formatted_data = json.dumps(filtered_data, indent=4)
-    # print(formatted_data)
+
 
 def plant_data(plant_query_url):
     headers = {'Authorization': house_plants_api()}  # Create headers dictionary
