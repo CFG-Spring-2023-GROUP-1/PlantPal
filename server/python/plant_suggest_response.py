@@ -46,6 +46,23 @@ def plant_data(plant_query_url):
     return data
 
 
+def get_recommendations_data(plants):
+    if plants:
+        recommendations = []
+        for i, plant in enumerate(plants[:3], 1):
+            recommendation = {
+                "recommendation_number": i,
+                "common_name": plant["common_name"],
+                "image_url": plant["default_image"]["small_url"]
+            }
+            recommendations.append(recommendation)
+
+        return json.dumps(recommendations)
+    else:
+        return json.dumps([])
+
+
+
 """User input"""
 input_sunlight, input_low_maintenance, input_preference, input_air_purifying = get_user_input()
 query_url = filter_sunlight(house_plants_api(), input_sunlight)
@@ -55,7 +72,10 @@ query_url = preference(query_url, input_preference)
 
 
 result_list = filter_air_purifying(plant_data(query_url),input_air_purifying)
-print_recommendations(result_list)
+# print_recommendations(result_list)
+print(get_recommendations_data(result_list))
+
+
 # print(plant_data(house_plants_api()))
 
 
