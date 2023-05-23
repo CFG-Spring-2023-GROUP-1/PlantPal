@@ -16,13 +16,15 @@ def get_user_input():
     input_low_maintenance = input('Do you want a low maintenance plant? (True/False): ')
     input_low_maintenance = bool(input_low_maintenance)
     input_preference = input('Do you have a preference for a certain type of plant? (Palm, Orchid, Aglaonema, Ficus elastica, Dracaena): ')
-    # air_purifying = input('Do you want an air purifying plant? (True/False): ')
-    return input_sunlight, input_low_maintenance, input_preference
+    input_air_purifying = input('Do you want an air purifying plant? (True/False): ')
+    input_air_purifying = bool(input_air_purifying)
+    return input_sunlight, input_low_maintenance, input_preference, input_air_purifying
 
 def print_recommendations(plants):
     if plants:
-        for i, plant in enumerate(plants[:5], 1):
-            print(f"Recommendation {i}: {plant['common_name']}")
+        for i, plant in enumerate(plants[:3], 1):
+            print(f"Recommendation {i}: {plant['common_name']}, {plant['default_image']['small_url']}")
+
     else:
         print("No plants found with the given filter.")
 
@@ -38,14 +40,27 @@ def print_plant_data(plant_query_url):
     # formatted_data = json.dumps(filtered_data, indent=4)
     # print(formatted_data)
 
+def plant_data(plant_query_url):
+    headers = {'Authorization': house_plants_api()}  # Create headers dictionary
+    response = requests.get(plant_query_url, headers=headers)   
+    data = response.json()
+    return data
+
 
 """User input"""
-input_sunlight, input_low_maintenance, input_preference = get_user_input()
+input_sunlight, input_low_maintenance, input_preference, input_air_purifying = get_user_input()
 query_url = filter_sunlight(house_plants_api(), input_sunlight)
 query_url = low_maintanance(query_url, input_low_maintenance)
 query_url = preference(query_url, input_preference)
-print_plant_data(query_url)
-# print(filter_air_purifying(plant_data(query_url),True))
+# print_plant_data(query_url)
+
+
+result_list = filter_air_purifying(plant_data(query_url),input_air_purifying)
+print_recommendations(result_list)
+# print(plant_data(house_plants_api()))
+
+
+
 
 
 
