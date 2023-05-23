@@ -43,7 +43,7 @@ def get_all_myplants():
 
 # # ADD TO MY PLANTS
 
-def add_plant(data, plant_id):
+def add_plant(data, plant_id, user_input_disease):
     try:
         db_name = 'PlantPal'
         db_connection = connect_to_plantpal_db(db_name)
@@ -52,15 +52,15 @@ def add_plant(data, plant_id):
 
         insert_qry = "INSERT INTO PlantDetails (PlantId, Category, LatinName, CommonNames, " \
                      "LightLevel, Watering, Climate, MaxTemp, MinTemp, GrowthSpeed, CommonDiseases, " \
-                     "LeafColour, BloomingSeason, Perfume, ColourOfBloom, Image ) VALUES " \
-                     "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                     "CurrentDisease, LeafColour, BloomingSeason, Perfume, ColourOfBloom, Image ) VALUES " \
+                     "(%s, %s, %s %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         common_names_str = ', '.join(data['Common name'])
         leaf_colour_str = ', '.join(data['Color of leaf'])
 
         cur.execute(insert_qry, (plant_id, data['Categories'], data['Latin name'], common_names_str, data['Light tolered'], data['Watering'],
                                  data['Climat'], json.dumps(data['Temperature max']), json.dumps(data['Temperature min']), data['Growth'],
-                                 data['Disease'], leaf_colour_str, data['Blooming season'], data['Perfume'], data['Color of blooms'],
+                                 data['Disease'], user_input_disease, leaf_colour_str, data['Blooming season'], data['Perfume'], data['Color of blooms'],
                                  data['Img']))
 
         db_connection.commit()
