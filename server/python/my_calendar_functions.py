@@ -1,24 +1,17 @@
 from datetime import datetime, timedelta
 
-#### EDIT TO MAKE IT SEASONAL WATERING
-
-
-def describe_needs(plant_name, water_frequency, days):
-    """Describes how often the plant needs watering"""
-    return (f"Your {plant_name.title()} needs watering {water_frequency} during the (every {days} days).")
-
-
-def days_between_watering(water_frequency):
-    """Turns watering information from the API into a number"""
-    days = 0
-    if water_frequency == "frequently":
-        days += 1
-    elif water_frequency == "regularly":
-        days += 7
-    elif water_frequency == "infrequently":
-        days += 14
-
-    return days
+#
+# def days_between_watering(water_frequency):
+#     """Turns watering information from the API into a number"""
+#     days = 0
+#     if water_frequency == "frequently":
+#         days += 1
+#     elif water_frequency == "regularly":
+#         days += 7
+#     elif water_frequency == "infrequently":
+#         days += 14
+#
+#     return days
 
 
 def last_water(plant_name):
@@ -33,17 +26,21 @@ def days_since_watered(last_watered, days):
     last_date = last_watered
     now = datetime.today()
     days_lapsed = now - last_date
+    # return days_lapsed
     print(f"It's been {days_lapsed.days} days since you last watered me.")
     if days_lapsed.days > days:
-        print("I'm overdue! Please water me ASAP")
+        return "overdue"
+    else:
+        return f"It's been {days_lapsed.days} days since you last watered me."
+        # print("I'm overdue! Please water me ASAP")
     # need to do an if for day or days
 
 
 
 def date_to_water(plant_name, last_watered, days):
     """Tells user the date they should next water their plant"""
-    water_due = last_watered + timedelta(days)  # Need to make this input in relation to function days
-    water_due = water_due.strftime("%A, %d/%m/%y")
+    water_due = last_watered + timedelta(days)
+    water_due = water_due.strftime("%A %dth %B %Y")
     return (f"You should next water your {plant_name.title()} on {water_due}.")
 
 

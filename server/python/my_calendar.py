@@ -4,35 +4,7 @@ import calendar
 import mysql.connector
 
 
-class Plant:
-    """Plant class that each of the user's plants will be an instance of (using the API for info)"""
-    def __init__(self, name, water_frequency):
-        self.name = name
-        self.water_frequency = water_frequency.lower()
-        self.days = 0
-
-    def describe_needs(self):
-        """Describes how often the plant needs watering"""
-        return f"Your {self.name.title()} needs {self.water_frequency.lower()}. Watering is recommended every {self.days} days"
-
-    def days_between_watering(self):
-        """Turns watering information from the API into a number"""
-        self.water_frequency_split = self.water_frequency.split(" ")
-
-        if "regular" in self.water_frequency_split:
-            self.days += 1
-        elif self.water_frequency == "regularly":
-            self.days += 7
-        elif self.water_frequency == "infrequently":
-            self.days += 14
-
-        return self.days
-
-
-class WateringCalendar:
-    """Main class which has methods for watering information"""
-    @staticmethod
-    def create_server_connection(host_name, user_name, user_password, db_name):
+def create_server_connection(host_name, user_name, user_password, db_name):
         """Establishes server connection with SQL database"""
         connection = None
         try:
@@ -48,7 +20,7 @@ class WateringCalendar:
         return connection
 
 
-    def read_query(connection, query):
+def read_query(connection, query):
         """Method to make a query to the database"""
         cursor = connection.cursor()
         result = None
@@ -59,10 +31,40 @@ class WateringCalendar:
         except Exception as err:
             print(f"Error: '{err}'")
 
+
+class Plant:
+    """Plant class that each of the user's plants will be an instance of (using the API for info)"""
+    def __init__(self, name, water_frequency):
+        self.name = name
+        self.water_frequency = water_frequency.lower()
+        self.days = 0
+
+    def describe_needs(self):
+        """Describes how often the plant needs watering"""
+        return f"Your {self.name.title()} needs {self.water_frequency.lower()}. Watering is recommended every {self.days} days"
+
+    def days_between_watering(self):
+        """Turns watering information from the API into a number"""
+        self.water_frequency_split = self.water_frequency.split(" ")
+
+        if "regular" or "regularly" in self.water_frequency_split:
+            self.days += 1
+        elif self.water_frequency == "regularly":
+            self.days += 7
+        elif self.water_frequency == "infrequently":
+            self.days += 14
+        else:
+            self.days += 3
+
+        return self.days
+
+
+class WateringCalendar:
+    """Main class which runs the calendar feature"""
     @staticmethod
     def run():
         """Main method that runs the watering calendar feature"""
-        connection = WateringCalendar.create_server_connection("127.0.0.1", "root", "Dylan28megan", "PlantPal")
+        connection = create_server_connection("127.0.0.1", "root", "Dylan28megan", "PlantPal")
 
         query = """
         SELECT p.CommonNames, pd.Watering
@@ -71,45 +73,39 @@ class WateringCalendar:
         ON p.PlantID = pd.PlantID
         """
 
-        my_plants_data = WateringCalendar.read_query(connection, query)
+        my_plants_data = read_query(connection, query)
 
-        my_plants = []
+        my_plants = []  # Create instances of plant class using DB
         for plant_data in my_plants_data:
             plant_name = plant_data[0]
             water_frequency = plant_data[1]
             plant = Plant(plant_name, water_frequency)
             my_plants.append(plant)
 
-        today_date = datetime.datetime.today()
-        yy = today_date.year
-        mm = today_date.month
-        today_date = today_date.strftime("%A, %d/%m/%y")
-
         print("Welcome to the PlantPal calendar")
-        print(f"Today is {today_date}")
+        print(f'Today is {datetime.datetime.today().strftime("%A %dth %B %Y")}')
         print("")
 
-        print(calendar.month(yy, mm))
+        print(calendar.month(datetime.datetime.today().year, datetime.datetime.today().month))
 
         for plant in my_plants:
             days = plant.days_between_watering()
             print(plant.describe_needs())
 
-            last_watered = datetime.datetime.strptime(input(f"When did you last water your {plant.name}? dd/mm/yy \n"),
-                                                      "%d/%m/%y")
-            days_since_watered = (datetime.datetime.today() - last_watered).days
-            print(f"It's been {days_since_watered} days since you last watered me.")
-            if days_since_watered > days:
-                print("I'm overdue a water! Please water me ASAP")
+            last_watered = my_calendar_functions.last_water(plant.name)
+
+            days_since_watered = my_calendar_functions.days_since_watered(last_watered, days)
+            if days_since_watered == "overdue":
+                print("Watering is overdue! Please water me ASAP")
                 print("-------")
                 continue
 
-            water_due = last_watered + datetime.timedelta(days)
-            water_due = water_due.strftime("%A, %d/%m/%y")
-            print(f"You should next water your {plant.name.title()} on {water_due}.")
+            print(my_calendar_functions.date_to_water(plant.name, last_watered, days))
             print("-------")
 
+
 ### Add any additional features here that will run after main info about plants
+
 
 WateringCalendar.run()
 
@@ -119,8 +115,6 @@ WateringCalendar.run()
 
 # Make a to do list for what needs doing next?
 # diseases
-
-
 
 # Do they want to search for a specific plant in their list or show all?
 # Maybe do a summary list of plant name and next water date

@@ -1,5 +1,5 @@
 from unittest import TestCase, main
-import my_calendar_functions
+import my_calendar_functions, my_calendar
 import datetime
 
 ### UPDATE TO REFLECT ADJUSTMENTS TO OOP
