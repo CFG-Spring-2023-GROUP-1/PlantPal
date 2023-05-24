@@ -26,15 +26,13 @@ def days_since_watered(last_watered, days):
     last_date = last_watered
     now = datetime.today()
     days_lapsed = now - last_date
-    # return days_lapsed
-    print(f"It's been {days_lapsed.days} days since you last watered me.")
     if days_lapsed.days > days:
+        print(f"It's been {days_lapsed.days} days since you last watered me")
         return "overdue"
+    elif days_lapsed.days <= 1:
+        print(f"It's been {days_lapsed.days} day since you last watered me")
     else:
-        return f"It's been {days_lapsed.days} days since you last watered me."
-        # print("I'm overdue! Please water me ASAP")
-    # need to do an if for day or days
-
+        print(f"It's been {days_lapsed.days} days since you last watered me")
 
 
 def date_to_water(plant_name, last_watered, days):

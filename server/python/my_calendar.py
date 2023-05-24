@@ -96,7 +96,7 @@ class WateringCalendar:
 
             days_since_watered = my_calendar_functions.days_since_watered(last_watered, days)
             if days_since_watered == "overdue":
-                print("Watering is overdue! Please water me ASAP")
+                print("Watering is overdue! Please water ASAP")
                 print("-------")
                 continue
 
