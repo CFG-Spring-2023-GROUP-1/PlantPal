@@ -20,7 +20,9 @@ def create_server_connection(host_name, user_name, user_password, db_name):
 
     return connection
 
+
 connection = create_server_connection("127.0.0.1", "root", "Dylan28megan", "PlantPal")
+
 
 def read_query(connection, query):
     """Function to make a query"""
