@@ -37,6 +37,7 @@ class Plant:
     def __init__(self, name, water_frequency):
         self.name = name
         self.water_frequency = water_frequency.lower()
+        # self.disease = disease
         self.days = 0
 
     def describe_needs(self):
@@ -47,9 +48,9 @@ class Plant:
         """Turns watering information from the API into a number"""
         self.water_frequency_split = self.water_frequency.split(" ")
 
-        if "regular" or "regularly" in self.water_frequency_split:
+        if "regular" in self.water_frequency_split or "regularly" in self.water_frequency_split:
             self.days += 1
-        elif self.water_frequency == "regularly":
+        elif self.water_frequency == "weekly":
             self.days += 7
         elif self.water_frequency == "infrequently":
             self.days += 14
@@ -79,6 +80,7 @@ class WateringCalendar:
         for plant_data in my_plants_data:
             plant_name = plant_data[0]
             water_frequency = plant_data[1]
+            # disease = plant_data[2]
             plant = Plant(plant_name, water_frequency)
             my_plants.append(plant)
 
@@ -100,6 +102,9 @@ class WateringCalendar:
                 print("-------")
                 continue
 
+            # if plant.disease:
+            #     my_calendar_functions.disease_treatments(plant.disease)
+
             print(my_calendar_functions.date_to_water(plant.name, last_watered, days))
             print("-------")
 
@@ -114,7 +119,6 @@ WateringCalendar.run()
 # Summary with what plants should be watered straight away, and dates for next ones
 
 # Make a to do list for what needs doing next?
-# diseases
 
 # Do they want to search for a specific plant in their list or show all?
 # Maybe do a summary list of plant name and next water date
