@@ -53,8 +53,8 @@ def add_plant(data, plant_id, user_input_disease):
 
         insert_qry = "INSERT INTO PlantDetails (PlantId, Category, LatinName, CommonNames, " \
                      "LightLevel, Watering, Climate, MaxTemp, MinTemp, GrowthSpeed, CommonDiseases, " \
-                     "CurrentDisease, LeafColour, BloomingSeason, Perfume, ColourOfBloom, Image ) VALUES " \
-                     "(%s, %s, %s %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                     "CurrentDisease, LeafColour, BloomingSeason, Perfume, ColourOfBloom, Image) VALUES" \
+                     "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         common_names_str = ', '.join(data['Common name'])
         leaf_colour_str = ', '.join(data['Color of leaf'])
@@ -65,7 +65,7 @@ def add_plant(data, plant_id, user_input_disease):
                                  data['Img']))
 
         db_connection.commit()
-        print(f"You've added {data['Common name']} ({data['Latin name']}) to your plant collection!")
+        print(f"You've added {'/'.join(data['Common name'])} ({data['Latin name']}) to your plant collection!")
         cur.close()
     except mysql.connector.Error as err:
         print(f'Error. Unable to add {data["Latin name"]}:', err)
@@ -78,11 +78,11 @@ def add_plant(data, plant_id, user_input_disease):
 
 def remove_plant(plant_name):
     try:
-        db_name = 'PlantDetails'
+        db_name = 'PlantPal'
         db_connection = connect_to_plantpal_db(db_name)
         cur = db_connection.cursor()
 
-        cur.execute('DELETE FROM PlantDetails WHERE name = %s', plant_name,)
+        cur.execute('DELETE FROM PlantDetails WHERE LatinName = %s', (plant_name,))
         db_connection.commit()
 
         if cur.rowcount > 0:
