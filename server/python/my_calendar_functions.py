@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta
+from main import ask_disease
 
 
 def last_water(plant_name):
@@ -107,29 +108,37 @@ aphids = " - Use a strong/ high pressure stream of water to wash off aphids from
 
 plant_friend_link = "Head to My Plant Friend for video tutorials to learn more about watering and diseases and how to prevent them"
 
-def disease_treatments(disease):
-    print(f"Your plant is currently showing signs of this: {disease}")
-    print(f"The following treatment steps should be followed:")
-    disease = disease.split(" ")
-    if "overwatering" or "rot" or "wilting" in disease:
-        return overwatering
-    elif "underwatering" or "dryness" in disease:
-        return underwatering
-    elif "yellowing" in disease:
-        return yellowing_leaves
-    elif "spot" or "fungal" in disease:
-        return fungal_disease
-    elif "gnats" in disease:
-        return fungus_gnats
-    elif "thrips" in disease:
-        return thrips_infestation
-    elif "spider" in disease:
-        return spider_mites
-    elif "mealy" in disease:
-        return mealy_bugs
-    elif "aphids" in disease:
-        return aphids
-    print(plant_friend_link)
+# user_input_disease = ask_disease()
+
+def disease_treatments():
+    """Function to display advice for how to treat different diseases"""
+    if user_input_disease:
+        print(f"Your plant is currently showing signs of this: {user_input_disease}")
+        print(f"The following treatment steps should be followed:")
+        disease = user_input_disease.split(" ")
+        if "overwatering" or "rot" or "wilting" in disease:
+            return overwatering
+        elif "underwatering" or "dryness" in disease:
+            return underwatering
+        elif "yellowing" in disease:
+            return yellowing_leaves
+        elif "spot" or "fungal" in disease:
+            return fungal_disease
+        elif "gnats" in disease:
+            return fungus_gnats
+        elif "thrips" in disease:
+            return thrips_infestation
+        elif "spider" in disease:
+            return spider_mites
+        elif "mealy" in disease:
+            return mealy_bugs
+        elif "aphids" in disease:
+            return aphids
+        print(plant_friend_link)
+    else:
+        pass
+
+
 
 
 

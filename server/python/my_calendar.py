@@ -37,8 +37,11 @@ class Plant:
     def __init__(self, name, water_frequency):
         self.name = name
         self.water_frequency = water_frequency.lower()
-        # self.disease = disease
         self.days = 0
+        # self.disease = ""
+
+    # def any_diseases(self):
+    #     self.disease = my_calendar_functions.ask_disease()
 
     def describe_needs(self):
         """Describes how often the plant needs watering"""
@@ -80,7 +83,6 @@ class WateringCalendar:
         for plant_data in my_plants_data:
             plant_name = plant_data[0]
             water_frequency = plant_data[1]
-            # disease = plant_data[2]
             plant = Plant(plant_name, water_frequency)
             my_plants.append(plant)
 
