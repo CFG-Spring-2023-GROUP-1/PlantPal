@@ -2,6 +2,7 @@ import my_calendar_functions
 import datetime
 import calendar
 import mysql.connector
+from main import ask_disease
 
 
 def create_server_connection(host_name, user_name, user_password, db_name):
@@ -38,10 +39,8 @@ class Plant:
         self.name = name
         self.water_frequency = water_frequency.lower()
         self.days = 0
-        # self.disease = ""
+        # self.disease = ask_disease(plant_data)
 
-    # def any_diseases(self):
-    #     self.disease = my_calendar_functions.ask_disease()
 
     def describe_needs(self):
         """Describes how often the plant needs watering"""
@@ -79,6 +78,10 @@ class WateringCalendar:
 
         my_plants_data = read_query(connection, query)
 
+        watering_order = []
+        watering_dates = {}
+        overdue = []
+
         my_plants = []  # Create instances of plant class using DB
         for plant_data in my_plants_data:
             plant_name = plant_data[0]
@@ -99,16 +102,36 @@ class WateringCalendar:
             last_watered = my_calendar_functions.last_water(plant.name)
 
             days_since_watered = my_calendar_functions.days_since_watered(last_watered, days)
+
             if days_since_watered == "overdue":
                 print("Watering is overdue! Please water ASAP")
                 print("-------")
+                overdue.append(plant.name)
                 continue
+            else:
+                watering_order.append(plant)
+                watering_dates[plant] = my_calendar_functions.date_to_water(plant.name, last_watered, days)
 
             # if plant.disease:
             #     my_calendar_functions.disease_treatments(plant.disease)
 
             print(my_calendar_functions.date_to_water(plant.name, last_watered, days))
             print("-------")
+            # my_calendar_functions.disease_treatments(user_input_disease)
+
+        print("Summary")
+        for plant in overdue:
+            if plant:
+                print("Water these plants now:")
+                print(f"- {plant}")
+            else:
+                pass
+        print("Next watering dates:")
+        for index, plant in enumerate(watering_order, start=1):
+            full_string = watering_dates[plant]
+            watering_date = full_string.split(" on ")[-1]
+            print(f"{index}. {plant.name.title()} - {watering_date}")
+
 
 
 ### Add any additional features here that will run after main info about plants
@@ -117,13 +140,8 @@ class WateringCalendar:
 WateringCalendar.run()
 
 
-# reminders for tomorrow?
-# Summary with what plants should be watered straight away, and dates for next ones
-
-# Make a to do list for what needs doing next?
-
 # Do they want to search for a specific plant in their list or show all?
-# Maybe do a summary list of plant name and next water date
+
 
 
 

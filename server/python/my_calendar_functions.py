@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from main import ask_disease
 
 
 def last_water(plant_name):
@@ -108,9 +107,8 @@ aphids = " - Use a strong/ high pressure stream of water to wash off aphids from
 
 plant_friend_link = "Head to My Plant Friend for video tutorials to learn more about watering and diseases and how to prevent them"
 
-# user_input_disease = ask_disease()
 
-def disease_treatments():
+def disease_treatments(user_input_disease):
     """Function to display advice for how to treat different diseases"""
     if user_input_disease:
         print(f"Your plant is currently showing signs of this: {user_input_disease}")
