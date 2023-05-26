@@ -14,34 +14,37 @@ load_dotenv()
 
 # remove plant from My Plants that matches select_plant user input
 def remove_from_my_plants(plants):
-    print(plants)
-    select_plant = input('Enter the scientific(latin) name of the plant you want to remove.')
-    chosen_entry = [plant for plant in plants if plant[2].lower() == select_plant.lower()] # select scientific name from the correct tuple
-    print(chosen_entry[0][2])
+    select_plant = input('Enter the scientific (Latin) name of the plant you want to remove: ')
+    chosen_entry = [plant for plant in plants if plant[2].lower() == select_plant.lower()]
     while not chosen_entry:
         print('Plant not found, please try again.')
         select_plant = input('Enter the scientific (Latin) name of the plant you want to remove: ')
-        chosen_entry = [plant for plant in plants if plant[2] == select_plant]
-    while select_plant.lower() != chosen_entry[0][2].lower():
-        print('Plant not found, please try again.')
-        select_plant = input('Enter the scientific(latin) name of the plant you want to remove.')
+        chosen_entry = [plant for plant in plants if plant[2].lower() == select_plant.lower()]
     remove_plant(select_plant)
+    search_plant()
+
 
 # Show user each plant in their collection
 def display_my_plants():
-    plants = get_all_myplants()
-    if plants:
-        print(f'My Plants:')
-        for plant in plants:
-            print(plant)
-    elif not plants:
-        print('Your plant collection is empty.')
-        return
-    # ask user if they want to remove any plant from displayed collection
-    ask_remove_plant = input('Would you like to remove a plant from your collection? (y/n)')
-    if ask_remove_plant.lower() == 'y':
-        remove_from_my_plants(plants)
-    elif ask_remove_plant.lower() == 'n':
+    try:
+        plants = get_all_myplants()
+        if plants:
+            print(f'My Plants:')
+            for plant in plants:
+                print(plant)
+        elif not plants:
+            print('Your plant collection is empty.')
+            return
+        # ask user if they want to remove any plant from displayed collection
+        ask_remove_plant = input('Would you like to remove a plant from your collection? (y/n)')
+        if ask_remove_plant.lower() == 'y':
+            remove_from_my_plants(plants)
+        elif ask_remove_plant.lower() == 'n':
+            search_plant()
+        else:
+            raise ValueError
+    except ValueError:
+        print(f'Invalid input.')
         search_plant()
 
 
@@ -65,7 +68,7 @@ def display_from_user_input(plant_data):
 
 # if common_diseases in plant_data is not none, ask for user input on plant disease
 def ask_disease(plant_data):
-    if plant_data['common_diseases'] == 'N/A':
+    if plant_data['common_diseases'] == "N/A":
         return None
     else:
         common_diseases = plant_data['common_diseases']
@@ -81,39 +84,36 @@ def ask_disease(plant_data):
 
 # ask user if they want to add searched for plant to My Plants
 def ask_add_plant(data, plant_id, user_input_plant, user_input_disease=None):
-    added = False
-    while not added:
-
-        add_plant_question = input(
-            f'Would you like to add {user_input_plant} to your My plants collection? (y/n)')
+    try:
+        add_plant_question = input(f'Would you like to add {user_input_plant} '
+                                   f'to your My plants collection? (y/n)')
         if add_plant_question.lower() == 'n':
             print(f'{user_input_plant} was not added')
-            added = True
         elif add_plant_question.lower() == 'y':
-            added = True
             return add_plant(data, plant_id, user_input_disease)
+    except Exception as err:
+        print(f"An error occurred: {err}")
 
 
 # call the api with user input
 def search_plant():
     while True:
-        user_input_plant = input('Please enter a house plant by common name or latin name,'
-                                 'or enter "My Plants" to view your plant collection.')
+        try:
+            user_input_plant = input('Please enter a house plant by common name or latin name,'
+                                     'or enter "My Plants" to view your plant collection.')
 
-        if user_input_plant.lower() == 'my plants':
-            display_my_plants()
+            if user_input_plant.lower() == 'my plants':
+                display_my_plants()
 
+            host = 'house-plants2.p.rapidapi.com'
+            url = f"{base_url}search"
+            querystring = {"query": user_input_plant}
+            headers = {
+                "X-RapidAPI-Key": api_key,
+                "X-RapidAPI-Host": host}
 
-        host = 'house-plants2.p.rapidapi.com'
-        url = f"{base_url}search"
-        querystring = {"query": user_input_plant}
-        headers = {
-            "X-RapidAPI-Key": api_key,
-            "X-RapidAPI-Host": host}
-        # Make the API request
-        response = requests.get(url, headers=headers, params=querystring)
-
-        if response.status_code == 200:
+            response = requests.get(url, headers=headers, params=querystring)
+            response.raise_for_status()
             full_data = response.json()
             if full_data:
                 plant_id = full_data[0]['refIndex']
@@ -133,14 +133,18 @@ def search_plant():
                     }
                     print(display_from_user_input(plant_data))
                     ask_add_plant(data, plant_id, user_input_plant, user_input_disease=ask_disease(plant_data))
-                    # add_plant(data, plant_id, user_input_disease=ask_disease(plant_data))
                 else:
-                    print("No plant found. Please enter a valid plant type.")
+                    print("No plant found. Please enter a valid plant name.")
             else:
                 print("Error: Failed to fetch plant data. Please try again.")
+        except requests.exceptions.RequestException as err:
+            print(f"Error: Failed to make the API request: {err}")
+        except (KeyError, IndexError) as err:
+            print(f"Error: Invalid response data: {err}")
 
 
-search_plant()
+if __name__ == '__main__':
+    search_plant()
 
 
 

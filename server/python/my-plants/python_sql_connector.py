@@ -1,9 +1,9 @@
 import mysql.connector
 import json
 
-USER = ''
-PASSWORD = ''
-HOST = 'localhost'
+USER = 'root'
+PASSWORD = 'Dylan28megan'
+HOST = '127.0.0.1'
 
 
 # CONNECT TO DB
@@ -31,8 +31,6 @@ def get_all_myplants():
 
         cur.execute('SELECT * FROM PlantDetails')
         result = cur.fetchall()
-        # for plant in result:
-        #     print(plant)
         cur.close()
         return result
     except mysql.connector.Error as err:
