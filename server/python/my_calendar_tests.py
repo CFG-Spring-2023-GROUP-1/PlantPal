@@ -5,6 +5,7 @@ import my_calendar_functions
 from my_calendar import Plant, WateringCalendar
 from datetime import datetime, timedelta
 
+"""Calendar tests"""
 
 class PlantTests(TestCase):
     def test_describe_needs(self):

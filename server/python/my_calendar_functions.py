@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+"""Functions for my calendar"""
 
 def read_query(connection, query):
     """Method to make a query to the database"""

@@ -3,6 +3,8 @@ import datetime
 import calendar
 from python_sql_connector import connect_to_plantpal_db
 
+"""Main my calendar feature"""
+
 connection = connect_to_plantpal_db('PlantPal')
 
 query = """
