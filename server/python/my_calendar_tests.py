@@ -9,17 +9,17 @@ from datetime import datetime, timedelta
 
 class PlantTests(TestCase):
     def test_describe_needs(self):
-        plant = Plant("cactus", "regularly")
+        plant = Plant("cactus", "regularly", "Overwatering")
         plant.days = 7
         expected_output = "Your Cactus needs regularly. Watering is recommended every 7 days"
         self.assertEqual(plant.describe_needs(), expected_output)
 
     def test_days_between_watering(self):
         """Test days between watering with different seasons"""
-        plant1 = Plant("Rose", "weekly")
-        plant2 = Plant("Lily", "regularly")
-        plant3 = Plant("Cactus", "infrequently")
-        plant4 = Plant("Orchid", "sporadically")
+        plant1 = Plant("Rose", "weekly", None)
+        plant2 = Plant("Lily", "regularly", "Root Rot")
+        plant3 = Plant("Cactus", "infrequently", "Flies")
+        plant4 = Plant("Orchid", "sporadically", "Wilting")
 
         self.assertEqual(plant1.days_between_watering(), 7)
         self.assertEqual(plant2.days_between_watering(), 2)
@@ -64,6 +64,12 @@ class CalendarTests(TestCase):
 
         self.assertEqual(result1, expected_date1)
         self.assertEqual(result2, expected_date2)
+
+
+class TestDiseaseTreatments(TestCase):
+    def test_disease_none(self):
+        result = my_calendar_functions.disease_treatments(None)
+        self.assertEqual(result, "Your plant currently shows no sign of disease")
 
 
 if __name__ == '__main__':

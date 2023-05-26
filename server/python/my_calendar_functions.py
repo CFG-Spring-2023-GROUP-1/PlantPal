@@ -54,7 +54,8 @@ def watering_summary(overdue, watering_order, watering_dates):
     for index, plant in enumerate(watering_order, start=1):
         full_string = watering_dates[plant]
         watering_date = full_string.split(" on ")[-1]
-        print(f"{index}. {plant.name.title()} - {watering_date}")
+        print(f"{index}. {plant.plant_name.title()} - {watering_date}")
+
 
 
 overwatering = " - Take houseplant off the soil to do a quick check-up on roots and throw away this oil (as root rot is"\
@@ -136,12 +137,14 @@ aphids = " - Use a strong/ high pressure stream of water to wash off aphids from
 plant_friend_link = "Head to My Plant Friend for video tutorials to learn more about watering and diseases and how to prevent them"
 
 
-def disease_treatments(user_input_disease):
+def disease_treatments(current_disease):
     """Function to display advice for how to treat different diseases"""
-    if user_input_disease:
-        print(f"Your plant is currently showing signs of this: {user_input_disease}")
+    if current_disease is None:
+        return "Your plant currently shows no sign of disease"
+    else:
+        print(f"Your plant is currently showing signs of this: {current_disease}")
         print(f"The following treatment steps should be followed:")
-        disease = user_input_disease.split(" ")
+        disease = current_disease.split(" ")
         if "overwatering" or "rot" or "wilting" in disease:
             return overwatering
         elif "underwatering" or "dryness" in disease:
@@ -161,15 +164,3 @@ def disease_treatments(user_input_disease):
         elif "aphids" in disease:
             return aphids
         print(plant_friend_link)
-    else:
-        pass
-
-
-
-
-
-
-
-
-
-
