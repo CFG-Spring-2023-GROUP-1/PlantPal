@@ -5,6 +5,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+
+  h6 {
+    @apply tracking-tight text-2xs uppercase font-semibold text-green-100;
+  }
+
+  h4 {
+    @apply text-lg md:text-xl capitalize font-bold text-green-100;
+  }
+}
 
 body {
   font-family: 'Manrope', sans-serif;
