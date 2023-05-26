@@ -1,6 +1,18 @@
 from datetime import datetime, timedelta
 
 
+def read_query(connection, query):
+    """Method to make a query to the database"""
+    cursor = connection.cursor()
+    result = None
+    try:
+        cursor.execute(query)
+        result = cursor.fetchall()
+        return result
+    except Exception as err:
+        print(f"Error: '{err}'")
+
+
 def last_water(plant_name):
     """Gets the date the user last watered their plant"""
     last_watered_string = input(f"When did you last water your {plant_name}? dd/mm/yy \n")
@@ -27,6 +39,21 @@ def date_to_water(plant_name, last_watered, days):
     water_due = last_watered + timedelta(days)
     water_due = water_due.strftime("%A %dth %B %Y")
     return f"You should next water your {plant_name.title()} on {water_due}."
+
+
+def watering_summary(overdue, watering_order, watering_dates):
+    print("Summary")
+    print("Water these plants now:")
+    for plant in overdue:
+        if plant:
+            print(f"- {plant}")
+        else:
+            pass
+    print("Next watering dates:")
+    for index, plant in enumerate(watering_order, start=1):
+        full_string = watering_dates[plant]
+        watering_date = full_string.split(" on ")[-1]
+        print(f"{index}. {plant.name.title()} - {watering_date}")
 
 
 overwatering = " - Take houseplant off the soil to do a quick check-up on roots and throw away this oil (as root rot is"\

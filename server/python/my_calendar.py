@@ -1,36 +1,18 @@
 import my_calendar_functions
 import datetime
 import calendar
-import mysql.connector
-from main import ask_disease
+from python_sql_connector import connect_to_plantpal_db
 
+connection = connect_to_plantpal_db('PlantPal')
 
-def create_server_connection(host_name, user_name, user_password, db_name):
-        """Establishes server connection with SQL database"""
-        connection = None
-        try:
-            connection = mysql.connector.connect(
-                host=host_name,
-                user=user_name,
-                passwd=user_password,
-                database=db_name
-            )
-        except Exception as err:
-            print(f"Server Error: '{err}'")
+query = """
+SELECT p.CommonNames, pd.Watering
+FROM Plants p
+INNER JOIN PlantDetails pd
+ON p.PlantID = pd.PlantID
+"""
 
-        return connection
-
-
-def read_query(connection, query):
-        """Method to make a query to the database"""
-        cursor = connection.cursor()
-        result = None
-        try:
-            cursor.execute(query)
-            result = cursor.fetchall()
-            return result
-        except Exception as err:
-            print(f"Error: '{err}'")
+my_plants_data = my_calendar_functions.read_query(connection, query)
 
 
 class Plant:
@@ -41,7 +23,6 @@ class Plant:
         self.days = 0
         # self.disease = ask_disease(plant_data)
 
-
     def describe_needs(self):
         """Describes how often the plant needs watering"""
         return f"Your {self.name.title()} needs {self.water_frequency.lower()}. Watering is recommended every {self.days} days"
@@ -51,6 +32,8 @@ class Plant:
         self.water_frequency_split = self.water_frequency.split(" ")
 
         if "regular" in self.water_frequency_split or "regularly" in self.water_frequency_split:
+            self.days += 2
+        elif self.water_frequency_split == "daily":
             self.days += 1
         elif self.water_frequency == "weekly":
             self.days += 7
@@ -67,22 +50,12 @@ class WateringCalendar:
     @staticmethod
     def run():
         """Main method that runs the watering calendar feature"""
-        connection = create_server_connection("127.0.0.1", "root", "Dylan28megan", "PlantPal")
 
-        query = """
-        SELECT p.CommonNames, pd.Watering
-        FROM Plants p
-        INNER JOIN PlantDetails pd
-        ON p.PlantID = pd.PlantID
-        """
-
-        my_plants_data = read_query(connection, query)
-
+        overdue = []
+        my_plants = []
         watering_order = []
         watering_dates = {}
-        overdue = []
 
-        my_plants = []  # Create instances of plant class using DB
         for plant_data in my_plants_data:
             plant_name = plant_data[0]
             water_frequency = plant_data[1]
@@ -119,28 +92,11 @@ class WateringCalendar:
             print("-------")
             # my_calendar_functions.disease_treatments(user_input_disease)
 
-        print("Summary")
-        for plant in overdue:
-            if plant:
-                print("Water these plants now:")
-                print(f"- {plant}")
-            else:
-                pass
-        print("Next watering dates:")
-        for index, plant in enumerate(watering_order, start=1):
-            full_string = watering_dates[plant]
-            watering_date = full_string.split(" on ")[-1]
-            print(f"{index}. {plant.name.title()} - {watering_date}")
-
-
-
-### Add any additional features here that will run after main info about plants
+        my_calendar_functions.watering_summary(overdue, watering_order, watering_dates)
 
 
 WateringCalendar.run()
 
-
-# Do they want to search for a specific plant in their list or show all?
 
 
 

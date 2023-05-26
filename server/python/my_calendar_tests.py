@@ -21,7 +21,7 @@ class PlantTests(TestCase):
         plant4 = Plant("Orchid", "sporadically")
 
         self.assertEqual(plant1.days_between_watering(), 7)
-        self.assertEqual(plant2.days_between_watering(), 1)
+        self.assertEqual(plant2.days_between_watering(), 2)
         self.assertEqual(plant3.days_between_watering(), 14)
         self.assertEqual(plant4.days_between_watering(), 3)
 
