@@ -31,8 +31,6 @@ def get_all_myplants():
 
         cur.execute('SELECT * FROM PlantDetails')
         result = cur.fetchall()
-        # for plant in result:
-        #     print(plant)
         cur.close()
         return result
     except mysql.connector.Error as err:
