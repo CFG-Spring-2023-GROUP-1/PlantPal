@@ -68,7 +68,7 @@ def display_from_user_input(plant_data):
 
 # if common_diseases in plant_data is not none, ask for user input on plant disease
 def ask_disease(plant_data):
-    if plant_data['common_diseases'] == 'N/A':
+    if plant_data['common_diseases'] == "N/A":
         return None
     else:
         common_diseases = plant_data['common_diseases']
