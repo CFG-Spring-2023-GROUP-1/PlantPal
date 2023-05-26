@@ -1,0 +1,29 @@
+.select-input input {
+  height: 32px;
+}
+.wrapper {
+  background-color: #fff;
+}
+
+.select-input svg {
+  fill: #ff9d00;
+}
+
+.input-box {
+  &-input {
+    background-color: #fff;
+    border: none;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    padding: 0.5rem;
+    &:focus {
+      outline: 1px solid #698c7a;
+    }
+    &[value] {
+      background-color: #fff;
+      color: #000;
+      font-weight: 500;
+    }
+  }
+}

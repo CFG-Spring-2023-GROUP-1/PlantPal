@@ -62,3 +62,6 @@ print(
     f'Common diseases: {plant_data["common_diseases"]}\n'
     f'Image: {plant_data["image"]}\n'
 )
+
+
+# from user.handler import get_all_users
