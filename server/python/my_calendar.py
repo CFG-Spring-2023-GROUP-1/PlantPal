@@ -15,7 +15,6 @@ ON p.PlantID = pd.PlantID
 """
 
 my_plants_data = my_calendar_functions.read_query(connection, query)
-print(my_plants_data)
 
 
 class Plant:
@@ -72,6 +71,8 @@ class WateringCalendar:
 
         print(calendar.month(datetime.datetime.today().year, datetime.datetime.today().month))
 
+        print("---------------")
+
         for plant in my_plants:
             days = plant.days_between_watering()
             print(plant.describe_needs())
@@ -82,7 +83,7 @@ class WateringCalendar:
 
             if days_since_watered == "overdue":
                 print("Watering is overdue! Please water ASAP")
-                print("-------")
+                print("---------------")
                 overdue.append(plant.plant_name)
                 continue
             else:
