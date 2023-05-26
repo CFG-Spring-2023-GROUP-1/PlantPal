@@ -27,10 +27,11 @@ def register():
     # deal with input payload
     try:
         data = request.json
-        user_exist = user.does_user_exist(data)
+        user_exist = User.does_user_exist(data)
+        print(user_exist)
         if user_exist:
             return 'A User with this Email Exists'
-        user.add_user(data)
+        User.add_user(data)
         return f'{request}'
     except Exception as exc:
         raise InternalServerError(f"Failed: {exc}")
@@ -41,7 +42,7 @@ def login():
     # deal with input payload
     try:
         data = request.json
-        user.login(data)
+        User.login(data)
         return f'{data}'
     except Exception as exc:
         raise InternalServerError(f"Failed: {exc}")

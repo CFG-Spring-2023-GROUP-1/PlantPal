@@ -6,7 +6,6 @@ import { FiHelpCircle } from 'react-icons/fi';
 import { PlantType } from './types';
 
 export const STORAGE_KEYS = {
-  AUTH_TOKEN: 'AUTH_TOKEN',
   USER_ID: 'id',
   EMAIL: 'email',
   FIRST_NAME: 'first_name',
@@ -17,7 +16,7 @@ export const ROUTE_KEYS = {
   LOGIN: '/login',
   REGISTER: '/register',
   HOME: '/',
-  PLANTS: '/my-plants',
+  MY_PLANTS: '/my-plants',
   PlANT_DETAILS: ':id',
   PLANT_FRIEND: '/my-plant-friend',
   PlANT_FRIEND_DETAILS: ':id'
@@ -27,17 +26,17 @@ export const SIDE_BAR = [
   {
     icon: <GiPlantSeed size={22} />,
     title: 'my plants',
-    route: ROUTE_KEYS.PLANTS
+    route: ROUTE_KEYS.MY_PLANTS
   },
   {
     icon: <FiHelpCircle size={22} />,
     title: 'my plant suggestions',
-    route: ROUTE_KEYS.PLANTS
+    route: ROUTE_KEYS.MY_PLANTS
   },
   {
     icon: <BiCalendarEvent size={22} />,
     title: 'my plant calender',
-    route: ROUTE_KEYS.PLANTS
+    route: ROUTE_KEYS.MY_PLANTS
   },
   {
     icon: <BsPeople size={22} />,

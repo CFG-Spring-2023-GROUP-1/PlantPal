@@ -7,7 +7,20 @@ import { ROUTE_KEYS } from '../../../utils/constants';
 import { Link } from 'react-router-dom';
 
 type FormType = 'login' | 'register';
-const LoginRegisterLayout = ({ children, type }: { children: ReactNode; type: FormType }) => {
+const LoginRegisterLayout = ({
+  children,
+  type,
+  onLogin,
+  loading
+}: {
+  children: ReactNode;
+  type: FormType;
+  onLogin?: () => void;
+  loading?: boolean;
+}) => {
+  const submitForm = async () => {
+    if (type === 'login') onLogin?.();
+  };
   return (
     <div className='flex max-h-[100vh] text-green-200'>
       <div
@@ -23,7 +36,10 @@ const LoginRegisterLayout = ({ children, type }: { children: ReactNode; type: Fo
 
         {children}
 
-        <Button color='green'> {type == 'register' ? 'Register' : 'Login'}</Button>
+        <Button onClick={submitForm} color='green' loading={loading}>
+          {' '}
+          {type == 'register' ? 'Register' : 'Login'}
+        </Button>
 
         <p className=' text-center mx-auto mt-6 text-green-500'>
           {type == 'login' ? "Don't have an account? " : 'Already have an account '}

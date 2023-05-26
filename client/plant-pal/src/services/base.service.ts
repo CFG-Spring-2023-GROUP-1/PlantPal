@@ -3,6 +3,7 @@ import { STORAGE_KEYS } from '../utils/constants';
 
 const BASE_API_URL = process.env.REACT_APP_RAPID_API_URL;
 const BASE_API_KEY = process.env.REACT_APP_RAPID_API_KEY;
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 const HOST = process.env.REACT_APP_RAPID_HOST
 
 interface RequestOption {
@@ -13,7 +14,7 @@ interface RequestOption {
 }
 
 const getToken = () => {
-  const token = localStorage.getItem(STORAGE_KEYS.AUTH_TOKEN);
+  const token = localStorage.getItem(STORAGE_KEYS.USER_ID);
   return token;
 };
 
@@ -30,7 +31,10 @@ const makeRequest = (
   if (isRapid){ headers["X-RapidAPI-Key"] = BASE_API_KEY
   headers["X-RapidAPI-Host"] = HOST
 }
-  const fullUrl = BASE_API_URL + urlPath;
+let fullUrl;
+ if(isRapid) { fullUrl = BASE_API_URL + urlPath} else {
+  fullUrl = BASE_URL + urlPath
+ }
   return axios({ ...options, url: fullUrl, headers: headers });
 };
 

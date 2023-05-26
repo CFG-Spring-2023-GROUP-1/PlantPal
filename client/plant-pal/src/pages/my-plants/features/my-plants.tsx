@@ -13,7 +13,7 @@ const MyPlants = () => {
   const navigate = useNavigate();
 
   const getPlantDetails = (item: string) => {
-    navigate(`${ROUTE_KEYS.PLANTS}/${item}`);
+    navigate(`${ROUTE_KEYS.MY_PLANTS}/${item}`);
   };
 
   const addPlants = () => {
