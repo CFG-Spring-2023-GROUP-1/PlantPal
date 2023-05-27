@@ -14,6 +14,9 @@ class TestHousePlantsAPI(unittest.TestCase):
         expected_url = 'https://perenual.com/api/species-list?page=1&key=test_api_key'
         self.assertEqual(house_plants_api(), expected_url)
 
+
+class TestHousePlantsURL(unittest.TestCase):
+
     def test_filter_sunlight(self):
         url = 'https://perenual.com/api/species-list?page=1&key=test_api_key'
         sunlight = 'full_sun'
@@ -32,12 +35,27 @@ class TestHousePlantsAPI(unittest.TestCase):
         expected_url = url + '&q=' + user_preference
         self.assertEqual(preference(url, user_preference), expected_url)
 
+class TestAirPurifyingFilter(unittest.TestCase):
+
     def test_filter_air_purifying(self):
         api_data = {'data': [{'scientific_name': 'Dypsis lutescens'}, {'scientific_name': 'Other name'}]}
         user_input = True
         expected_output = [{'scientific_name': 'Dypsis lutescens'}]
         self.assertEqual(filter_air_purifying(api_data, user_input), expected_output)
 
+    
+    def test_filter_air_purifying_false(self):
+        api_data = {'data': [{'scientific_name': 'Dypsis lutescens'}, {'scientific_name': 'Other name'}]}
+        user_input = False
+        expected_output = [{'scientific_name': 'Dypsis lutescens'}, {'scientific_name': 'Other name'}]
+        actual_output = filter_air_purifying(api_data, user_input)
+        self.assertEqual(actual_output, expected_output)
+
+    def test_invalid_input(self):
+        api_data = {'data': [{'scientific_name': 'Dypsis lutescens'}, {'scientific_name': 'Other name'}]}
+        user_input = "invalid"
+        with self.assertRaises(ValueError):
+            filter_air_purifying(api_data, user_input)
 
 if __name__ == '__main__':
     unittest.main()
