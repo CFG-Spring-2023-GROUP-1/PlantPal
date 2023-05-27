@@ -39,16 +39,16 @@ CREATE TABLE PlantDetails (
   BloomingSeason varchar(25),
   Perfume varchar(55),
   ColourOfBloom varchar(25),
-  Image varchar(255),
+  Image varchar(255)
 )
 
 
-user = User(
-    "Emina",
-    "Ergul",
-    "emina.ergul@example.com",
-    "+1234567890",
-    "1990-01-01",
-    "123 Main Street, City, Country",
-    "password123",
-)
+-- user = User(
+--     "Emina",
+--     "Ergul",
+--     "emina.ergul@example.com",
+--     "+1234567890",
+--     "1990-01-01",
+--     "123 Main Street, City, Country",
+--     "password123",
+-- )

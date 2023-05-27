@@ -3,6 +3,7 @@ import os
 from unittest.mock import patch
 from plant_suggest_filter import house_plants_api, filter_sunlight, low_maintanance, preference, filter_air_purifying
 
+
 class TestHousePlantsAPI(unittest.TestCase):
 
     @patch('plant_suggest_filter.os.getenv')
@@ -34,6 +35,7 @@ class TestHousePlantsAPI(unittest.TestCase):
         user_input = True
         expected_output = [{'scientific_name': 'Dypsis lutescens'}]
         self.assertEqual(filter_air_purifying(api_data, user_input), expected_output)
+
 
 if __name__ == '__main__':
     unittest.main()

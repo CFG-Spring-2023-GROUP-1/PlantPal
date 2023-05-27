@@ -1,7 +1,6 @@
-from user_db import get_sql_connection, DBConnectionError
-import pprint as pp
 import bcrypt
 import uuid
+from .. import connect_to_db as p
 
 
 class User:
@@ -31,13 +30,13 @@ class User:
     def get_users():
         conn = None
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor(dictionary=True)
             query = 'select * from users'
             cursor.execute(query)
-            return cursor.fetchall()
+            return cursor.fetch
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
@@ -46,7 +45,7 @@ class User:
         conn = None
         print(self.email)
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor()
             query = f"select UserId from Users where Email = '{self.email}'"
             cursor.execute(query)
@@ -56,7 +55,7 @@ class User:
             else:
                 return self.generate_id()
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
@@ -65,13 +64,13 @@ class User:
     def get_user_by_id(u_id):
         conn = None
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor(dictionary=True)
             query = f'select * from users where UserId = "{u_id}"'
             cursor.execute(query)
             return cursor.fetchone()
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
@@ -79,7 +78,7 @@ class User:
     def login(self, data):
         conn = None
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor(dictionary=True)
             query = f"select * from Users where Email = '{data['Email']}'"
             cursor.execute(query)
@@ -90,7 +89,7 @@ class User:
             else:
                 return 'Incorrect Username or Password'
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
@@ -120,7 +119,7 @@ class User:
     def add_user(self, data):
         conn = None
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor(dictionary=True)
             query = f"INSERT INTO Users (UserId, FirstName, LastName, Email, PhoneNo, " \
                     f"Dob, Address, Password) VALUES " \
@@ -130,7 +129,7 @@ class User:
             conn.commit()
             cursor.close()
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
@@ -147,14 +146,14 @@ class User:
     def remove_user(u_id):
         conn = None
         try:
-            conn = get_sql_connection()
+            conn = p.get_sql_connection()
             cursor = conn.cursor(dictionary=True)
             query = f"DELETE FROM users WHERE UserId = '{u_id}'"
             cursor.execute(query)
             conn.commit()
             cursor.close()
         except Exception as exc:
-            raise DBConnectionError('Failed to connect to database') from exc
+            raise p.DBConnectionError('Failed to connect to database') from exc
         finally:
             if conn:
                 conn.close()
