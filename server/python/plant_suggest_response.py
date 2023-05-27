@@ -27,7 +27,6 @@ def print_recommendations(plants):
     if plants:
         for i, plant in enumerate(plants[:3], 1):
             print(f"Recommendation {i}: {plant['common_name']}, {plant['default_image']['small_url']}")
-
     else:
         print("No plants found with the given filter.")
 
@@ -65,7 +64,7 @@ def get_recommendations_data(plants):
         return json.dumps([])
 
 
-"""User input"""
+"""Depreciated User input app"""
 # input_sunlight, input_low_maintenance, input_preference, input_air_purifying = get_user_input()
 # query_url = filter_sunlight(house_plants_api(), input_sunlight)
 # query_url = low_maintanance(query_url, input_low_maintenance)
