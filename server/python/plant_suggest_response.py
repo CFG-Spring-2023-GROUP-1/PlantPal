@@ -1,5 +1,5 @@
 import json, requests
-from plant_suggest_filter import filter_sunlight, low_maintanance, preference, house_plants_api, filter_air_purifying
+from .plant_suggest_filter import filter_sunlight, low_maintanance, preference, house_plants_api, filter_air_purifying
 
 """
 Fuction Requirements
@@ -64,16 +64,16 @@ def get_recommendations_data(plants):
 
 
 """User input"""
-input_sunlight, input_low_maintenance, input_preference, input_air_purifying = get_user_input()
-query_url = filter_sunlight(house_plants_api(), input_sunlight)
-query_url = low_maintanance(query_url, input_low_maintenance)
-query_url = preference(query_url, input_preference)
+# input_sunlight, input_low_maintenance, input_preference, input_air_purifying = get_user_input()
+# query_url = filter_sunlight(house_plants_api(), input_sunlight)
+# query_url = low_maintanance(query_url, input_low_maintenance)
+# query_url = preference(query_url, input_preference)
 # print_plant_data(query_url)
 
 
-result_list = filter_air_purifying(plant_data(query_url),input_air_purifying)
+# result_list = filter_air_purifying(plant_data(query_url),input_air_purifying)
 # print_recommendations(result_list)
-print(get_recommendations_data(result_list))
+# print(get_recommendations_data(result_list))
 
 
 # print(plant_data(house_plants_api()))

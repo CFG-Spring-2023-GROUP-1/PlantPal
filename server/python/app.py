@@ -1,17 +1,19 @@
 # app for My Plant Friend feature:
 
 import mysql.connector
-from flask import Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify
 
-app = Flask(__name__)
-app.config['DEBUG'] = True
+my_plant_friend = Blueprint('my_plant_friend', __name__)
+
+# app = Flask(__name__)
+# app.config['DEBUG'] = True
 
 # MySQL configuration:
 mysql_config = {
-    'user': 'JiaChi_Leow',
-    'password': 'L2345678a@$%',
+    'user': 'root',
+    'password': 'admin',
     'host': '127.0.0.1',
-    'database': 'myplantfriend',
+    'database': 'PlantPal',
 }
 
 # Firstly, connect to MySQL db by making a MySQL connection:
@@ -30,7 +32,7 @@ class VideoNotFoundException_current_week(Exception):
 
 # Endpoint to retrieve current week's feature YT video(s) info from MySQL db:
 # Worked!
-@app.route('/videos/current', methods=['GET'])
+@my_plant_friend.route('/videos/current', methods=['GET'])
 def get_current_videos():
     try:
         # Execute a SELECT query to fetch the current week's feature YT video(s) info from db:
@@ -69,7 +71,7 @@ class VideoTopicsNotFoundException(Exception):
 
 # Endpoint to retrieve video topics from MySQL db:
 # Worked!
-@app.route('/videos/topics', methods=['GET'])
+@my_plant_friend.route('/videos/topics', methods=['GET'])
 def get_video_topics():
     try:
         # Execute a SELECT DISTINCT query to fetch all video topics from db:
@@ -101,7 +103,7 @@ class VideosByTopicNotFoundException(Exception):
 
 # Endpoint to retrieve YT video(s)'s info by TOPICS from db:
 # Worked!
-@app.route('/videos/topics/<string:topic>', methods=['GET'])
+@my_plant_friend.route('/videos/topics/<string:topic>', methods=['GET'])
 def get_videos_by_topic(topic):
     try:
         # Execute a SELECT query to fetch YT video(s) info depending on the topic from the db:
@@ -132,7 +134,7 @@ def get_videos_by_topic(topic):
 
 # Endpoint to retrieve YT video(s)'s info by date from db:
 # Worked!
-@app.route('/videos/all', methods=['GET'])
+@my_plant_friend.route('/videos/all', methods=['GET'])
 def get_all_videos():
     try:
         # Execute a SELECT query to fetch YT video(s) info sorted by date from the db:
@@ -169,7 +171,7 @@ class AdsNotFetchedException(Exception):
 
 # Endpoint to retrieve ad info from db:
 # Worked!
-@app.route('/ads', methods=['GET'])
+@my_plant_friend.route('/ads', methods=['GET'])
 def get_ads():
     try:
         # Execute a SELECT query to fetch all ads from the db:
@@ -199,7 +201,7 @@ def get_ads():
 
 # Endpoint for user to rate a video:
 # Worked!
-@app.route('/videos/<int:video_id>/rate', methods=['POST'])
+@my_plant_friend.route('/videos/<int:video_id>/rate', methods=['POST'])
 def rate_video(video_id):
     try:
         # Prompt user for rating and comment:
@@ -223,7 +225,7 @@ def rate_video(video_id):
 
 # Endpoint to fetch video ratings and comments
 # Worked!
-@app.route('/videos/<int:video_id>/ratings', methods=['GET'])
+@my_plant_friend.route('/videos/<int:video_id>/ratings', methods=['GET'])
 def get_video_ratings(video_id):
     try:
         # Retrieving ratings and comments from the database
@@ -239,7 +241,7 @@ def get_video_ratings(video_id):
         return jsonify({'error': f"Failed to fetch video ratings and comments: {error}"}), 500
 
 
-# Run the Flask application
-if __name__ == '__main__':
-    app.run()
+# # Run the Flask application
+# if __name__ == '__main__':
+#     app.run()
 

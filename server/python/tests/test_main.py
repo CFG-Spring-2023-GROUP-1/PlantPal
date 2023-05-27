@@ -1,5 +1,7 @@
 import unittest
 from unittest.mock import patch
+import sys
+sys.path.append("../")
 from main import remove_from_my_plants, replace_none, display_my_plants, display_from_user_input, search_plant
 
 class TestMainFunctions(unittest.TestCase):

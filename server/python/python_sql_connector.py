@@ -2,7 +2,7 @@ import mysql.connector
 import json
 
 USER = 'root'
-PASSWORD = 'Dylan28megan'
+PASSWORD = 'admin'
 HOST = '127.0.0.1'
 
 

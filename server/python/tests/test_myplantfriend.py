@@ -4,10 +4,10 @@ from unittest.mock import patch
 from unittest import TestCase, mock
 import json
 # import mysql.connector
-
+import sys
+sys.path.append("../")
 from app import app, VideoNotFoundException_current_week, VideoTopicsNotFoundException, VideosByTopicNotFoundException, \
     AdsNotFetchedException
-
 
 # Unit tests for current week videos :
 class VideoEndpointsTestCase(unittest.TestCase):
