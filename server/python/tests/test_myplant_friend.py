@@ -1,5 +1,6 @@
 # this is the unit test file for 'My Plant Friend' feature:
-
+from app import app, VideoNotFoundException_current_week, VideoTopicsNotFoundException, VideosByTopicNotFoundException, \
+    AdsNotFetchedException
 import unittest
 from unittest.mock import patch
 from unittest import TestCase, mock
@@ -7,18 +8,18 @@ import json
 # import mysql.connector
 import sys
 sys.path.append("../")
-from app import my_plant_friend_blueprint, VideoNotFoundException_current_week, VideoTopicsNotFoundException, VideosByTopicNotFoundException, \
-    AdsNotFetchedException
+# Unit tests for current week videos :
+
 
 class VideoEndpointsTestCase(unittest.TestCase):
     def setUp(self):
-        my_plant_friend_blueprint.testing = True
-        self.my_plant_friend_blueprint = my_plant_friend_blueprint.test_client()
+        app.testing = True
+        self.app = app.test_client()
 
     def tearDown(self):
         pass
 
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     # Mock the behavior of the database cursor to return some info:
     def test_get_current_videos_success(self, mock_db_cursor):
         mock_db_cursor.execute.return_value = None
@@ -30,7 +31,7 @@ class VideoEndpointsTestCase(unittest.TestCase):
                                                  'healthy terrariums.', 'https://www.youtube.com/watch?v=GIWy75QPxkI')]
 
         # Make a GET request to the '/videos/current' endpoint:
-        response = self.my_plant_friend_blueprint.get('/videos/current')
+        response = self.app.get('/videos/current')
         data = response.get_json()
 
         # Assert the response status code and content:
@@ -54,13 +55,13 @@ class VideoEndpointsTestCase(unittest.TestCase):
                          'https://www.youtube.com/watch?v=GIWy75QPxkI')
 
     # Mock the behavior of the database cursor to return an empty list with no data inside:
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     def test_get_current_videos_no_videos_found(self, mock_db_cursor):
         mock_db_cursor.execute.return_value = None
         mock_db_cursor.fetchall.return_value = []
 
         with self.assertRaises(VideoNotFoundException_current_week) as context:
-            self.my_plant_friend_blueprint.get('/videos/current')
+            self.app.get('/videos/current')
 
         # Assert the response status code and content:
         self.assertEqual(context.exception.message,
@@ -75,13 +76,13 @@ if __name__ == '__main__':
 # Unit tests for fetching topics' names from db:
 class VideoTopicsTestCase(unittest.TestCase):
     def setUp(self):
-        my_plant_friend_blueprint.testing = True
-        self.my_plant_friend_blueprint = my_plant_friend_blueprint.test_client()
+        app.testing = True
+        self.app = app.test_client()
 
     def tearDown(self):
         pass
 
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     def test_get_video_topics_success(self, mock_db_cursor):
         mock_db_cursor.execute.return_value = None
         mock_db_cursor.fetchall.return_value = [('Repotting',), ('Houseplant Care Tips',), ('Watering',),
@@ -91,7 +92,7 @@ class VideoTopicsTestCase(unittest.TestCase):
                                                 ('Terrariums & Greenhouses',),
                                                 ('Natural Lighting & Growth Lights',)]
 
-        response = self.my_plant_friend_blueprint.get('/videos/topics')
+        response = self.app.get('/videos/topics')
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
@@ -107,13 +108,13 @@ class VideoTopicsTestCase(unittest.TestCase):
         self.assertEqual(data['topics'][7]['name'],
                          'Natural Lighting & Growth Lights')
 
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     def test_get_video_topics_empty(self, mock_db_cursor):
         mock_db_cursor.execute.return_value = None
         mock_db_cursor.fetchall.return_value = []
 
         with self.assertRaises(VideoTopicsNotFoundException) as context:
-            self.my_plant_friend_blueprint.get('/videos/topics')
+            self.app.get('/videos/topics')
 
         self.assertEqual(context.exception.message, 'No video topics found.')
         self.assertEqual(context.exception.status_code, 404)
@@ -126,13 +127,13 @@ if __name__ == '__main__':
 # Unit tests for the get_videos_by_topic endpoint
 class GetVideosByTopicTestCase(unittest.TestCase):
     def setUp(self):
-        my_plant_friend_blueprint.testing = True
-        self.my_plant_friend_blueprint = my_plant_friend_blueprint.test_client()
+        app.testing = True
+        self.app = app.test_client()
 
     def tearDown(self):
         pass
 
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     def test_get_videos_by_topic_success(self, mock_db_cursor):
         mock_db_cursor.execute.return_value = None
         mock_db_cursor.fetchall.return_value = [
@@ -147,7 +148,7 @@ class GetVideosByTopicTestCase(unittest.TestCase):
              'https://www.youtube.com/watch?v=Fy8kP2EYpcY&t')
         ]
 
-        response = self.my_plant_friend_blueprint.get('/videos/topics/Repotting')
+        response = self.app.get('/videos/topics/Repotting')
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
@@ -176,14 +177,14 @@ class GetVideosByTopicTestCase(unittest.TestCase):
         self.assertEqual(data['videos'][2]['url'],
                          'https://www.youtube.com/watch?v=Fy8kP2EYpcY&t')
 
-    @patch('my_plant_friend_blueprint.db_cursor')
+    @patch('app.db_cursor')
     def test_get_videos_by_topic_no_results(self, mock_db_cursor):
         # Mock the database cursor to return an empty list with no values:
         mock_db_cursor.execute.return_value = None
         mock_db_cursor.fetchall.return_value = []
 
         with self.assertRaises(VideosByTopicNotFoundException) as context:
-            self.my_plant_friend_blueprint.get('/videos/topics/MossPoles')
+            self.app.get('/videos/topics/MossPoles')
 
         self.assertEqual(context.exception.message,
                          "No videos found for this topic.")
@@ -197,7 +198,7 @@ if __name__ == '__main__':
 # Unit tests for get_all_videos endpoint:
 class AdsTestCase(unittest.TestCase):
     def setUp(self):
-        my_plant_friend_blueprint.testing = True
+        app.testing = True
         self.app = app.test_client()
 
     def tearDown(self):
