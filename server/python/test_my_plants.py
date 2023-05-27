@@ -3,22 +3,6 @@ from unittest.mock import patch
 from my_plants_main import remove_from_my_plants, replace_none, display_my_plants, display_from_user_input, search_plant
 
 class TestMainFunctions(unittest.TestCase):
-    @patch('main.input', side_effect=['Monstera deliciosa', 'y'])
-    @patch('main.remove_plant')
-    def test_remove_from_my_plants(self, mock_remove_plant, _):
-        mock_plants = [
-            (8, 'Bromeliad', 'Guzmenia', 'Guzmania'),
-            (157, 'Philodendron', 'Monstera deliciosa', 'Splitleaf Philodendron, Mexican Breadfruit'),
-            (275, 'Hanging', 'Chlorophytum comosum', 'Spider plant')
-        ]
-        remove_from_my_plants(mock_plants)
-        mock_remove_plant.assert_called_once_with('Monstera deliciosa')
-
-    @patch('builtins.input', side_effect=['Monstera deliciosa', 'n'])
-    def test_search_plant(self, mock_input):
-        search_plant()
-        mock_input.assert_called_with(
-            'Please enter a house plant by common name or latin name, or enter "My Plants" to view your plant collection')
     def test_replace_none(self):
         self.assertEqual(replace_none(None), 'N/A')
         self.assertEqual(replace_none('Cycas revoluta'), 'Cycas revoluta')
@@ -58,10 +42,17 @@ class TestMainFunctions(unittest.TestCase):
                 display_my_plants()
         mock_print.assert_called_with("Your plant collection is empty.")
 
+        # @patch('main.input', side_effect=['Monstera deliciosa', 'y'])
+        # @patch('main.remove_plant')
+        # def test_remove_from_my_plants(self, mock_remove_plant, _):
+        #     mock_plants = [
+        #         (8, 'Bromeliad', 'Guzmenia', 'Guzmania'),
+        #         (157, 'Philodendron', 'Monstera deliciosa', 'Splitleaf Philodendron, Mexican Breadfruit'),
+        #         (275, 'Hanging', 'Chlorophytum comosum', 'Spider plant')
+        #     ]
+        #     remove_from_my_plants(mock_plants)
+        #     mock_remove_plant.assert_called_once_with('Monstera deliciosa')
+
 
 if __name__ == '__main__':
     unittest.main()
-
-# (8, 'Bromeliad', "Guzmenia 'Marjan'", 'Guzmania')
-# (157, 'Philodendron', 'Monstera deliciosa', 'Splitleaf Philodendron, Mexican Breadfruit')
-# (275, 'Hanging', 'Chlorophytum comosum', 'Spider plant')

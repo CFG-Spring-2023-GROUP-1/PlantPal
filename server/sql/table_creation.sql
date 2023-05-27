@@ -42,6 +42,37 @@ CREATE TABLE PlantDetails (
   Image varchar(255)
 )
 
+-- creating a table, named 'topics' which contains all the available topics:
+CREATE TABLE topics (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL
+);
+
+-- creating a table, named 'videos' which contains all necessary data for all YT videos uploaded:
+CREATE TABLE videos (
+    video_id INT NOT NULL,
+    topic VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    url VARCHAR(255) NOT NULL,
+    week INT NOT NULL,
+    date DATE NOT NULL
+);
+
+-- Create index on video_id column in topics table
+CREATE INDEX idx_video_id ON videos (video_id);
+
+-- Create an index on the topic_name column in the videos table
+CREATE INDEX idx_videos_topic_name ON videos (topic);
+
+-- creating a table, named 'ratings' which contains ratings + comments for each video:
+CREATE TABLE ratings (
+    video_id INT NOT NULL,
+    rating INT NOT NULL,
+    comment TEXT,
+    FOREIGN KEY (video_id) REFERENCES videos(video_id)
+);
+
 
 -- user = User(
 --     "Emina",

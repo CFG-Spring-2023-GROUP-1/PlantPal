@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 import requests
 
-
 # to load .env
 from dotenv import load_dotenv
 import os
