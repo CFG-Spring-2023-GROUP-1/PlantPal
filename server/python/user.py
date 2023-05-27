@@ -1,6 +1,7 @@
+from connect_to_db import get_sql_connection, DBConnectionError
+import pprint as pp
 import bcrypt
 import uuid
-from connect_to_db import get_sql_connection, DBConnectionError
 
 
 class User:
@@ -34,7 +35,7 @@ class User:
             cursor = conn.cursor(dictionary=True)
             query = 'select * from users'
             cursor.execute(query)
-            return cursor.fetch
+            return cursor.fetchall()
         except Exception as exc:
             raise DBConnectionError('Failed to connect to database') from exc
         finally:
@@ -157,24 +158,3 @@ class User:
         finally:
             if conn:
                 conn.close()
-
-# user = User(
-#     "Emina",
-#     "Ergul",
-#     "emina.ergul@example.com",
-#     "+1234567890",
-#     "1990-01-01",
-#     "123 Main Street, City, Country",
-#     "password123",
-# )
-#
-# data = {
-#     "FirstName": "Rinsola",
-#     "LastName": "Olatunji",
-#     "Email": "feranmi.ayo@example.com",
-#     "PhoneNo": "+2234567890",
-#     "Dob": "1992-01-01",
-#     "Address": "123 Tops Street, City, Country",
-#     "Password": "password1234",
-# }
-# ppprint(user.does_user_exist(data))

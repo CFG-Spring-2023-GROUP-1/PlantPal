@@ -4,7 +4,7 @@ import json
 data = {
     "FirstName": "Joanne",
     "LastName": "Leow",
-    "Email": "rebecaa.leow@example.com",
+    "Email": "rebecaa.leowW@example.com",
     "PhoneNo": "+3234567890",
     "Dob": "1993-01-01",
     "Address": "123 Leow Street, City, Country",
