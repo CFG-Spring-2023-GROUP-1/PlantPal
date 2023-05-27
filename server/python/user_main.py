@@ -9,41 +9,38 @@ user_blueprint = Blueprint('user', __name__)
 @user_blueprint.route("/users/", methods=["GET"])
 def get_all_users():
     print(User.get_users())
-    return jsonify(User.get_users())
+    return jsonify({'user': User.get_users(), 'message': 'Users Fetched Succesfully'}), 200
 
 
 @user_blueprint.route("/user/<u_id>", methods=["GET"])
 def get_user_by_id(u_id):
-    return jsonify(User.get_user_by_id(u_id))
+    return jsonify({'user': User.get_user_by_id(u_id), 'message': 'User Fetched Succesfully'}), 200
 
 
 @user_blueprint.route("/register", methods=["POST"])
 def register():
-    # deal with input payload
     try:
         data = request.json
         user = User(
-            "FirstName",
-            "LastName",
-            "Email",
-            "PhoneNo",
-            "Dob",
-            "Address",
-            "Password",
+            data["FirstName"],
+            data["LastName"],
+            data["Email"],
+            data["PhoneNo"],
+            data["Dob"],
+            data["Address"],
+            data["Password"],
         )
         user_exist = user.does_user_exist(data)
-        print(user_exist)
         if user_exist:
             return 'A User with this Email Exists'
         user.add_user(data)
-        return f'{request}'
+        return jsonify({'message': 'User Added Succesfully', 'user': data}), 200
     except Exception as exc:
         raise InternalServerError(f"Failed: {exc}")
 
 
 @user_blueprint.route("/remove-user/", methods=["DELETE"])
 def remove_user():
-    # deal with input payload
     try:
         data = request.json
         print(data)

@@ -3,25 +3,25 @@ from plant_suggest_response import get_recommendations_data
 from plant_suggest_filter import get_plant_data_url
 import requests
 
-plant_suggestions = Blueprint('plant_suggestions', __name__)
+plant_suggestions_blueprint = Blueprint('plant_suggestions', __name__)
 
 
-@plant_suggestions.route('/home', methods=['GET'])
+@plant_suggestions_blueprint.route('/home', methods=['GET'])
 def welcome_endpoint():
     return jsonify("Welcome to PlantPal!")
 
 
-@plant_suggestions.route('/suggestion', methods=['POST'])
+@plant_suggestions_blueprint.route('/suggestion', methods=['POST'])
 def get_recommendations_endpoint():
-    
-    user_input = request.json    
+
+    user_input = request.json
     plants = user_input['plants']
 
     # Call the get_recommendations_data function with the input parameters
     recommendations_data = get_recommendations_data(plants)
     response = {
         "message": "This is the sugguestion response"
-    }    
+    }
     return jsonify(recommendations_data)
 
 
@@ -38,7 +38,7 @@ def get_plant_filter_endpoint():
     response = requests.get(url)
 
     if response.status_code == 200:
-        data = response.json()        
+        data = response.json()
         return jsonify(data), 200
     else:
         return jsonify({"error": "Unable to fetch data"}), response.status_code
