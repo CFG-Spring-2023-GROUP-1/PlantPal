@@ -37,7 +37,7 @@ class TestMainFunctions(unittest.TestCase):
         self.assertEqual(display_from_user_input(plant_data), expected)
 
     def test_display_myplants_empty(self):
-        with patch('main.get_all_myplants', return_value=[]):
+        with patch('my_plants_main.get_all_myplants', return_value=[]):
             with patch('builtins.print') as mock_print:
                 display_my_plants()
         mock_print.assert_called_with("Your plant collection is empty.")
