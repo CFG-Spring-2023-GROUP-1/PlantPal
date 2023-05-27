@@ -25,7 +25,7 @@ __pycache__/
 *.bak
 
 # Dependency and package files
-requirements.txt
+# requirements.txt
 Pipfile
 Pipfile.lock
 poetry.lock
