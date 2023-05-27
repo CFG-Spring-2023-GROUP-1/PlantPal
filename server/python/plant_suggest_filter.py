@@ -43,11 +43,32 @@ def preference(url, user_preference):
     elif user_preference == '' or user_preference == None:
         return url
 
+def get_plant_data_url(sunlight=None, low_maintenance=None, preference=None):
+    
+    load_dotenv()  # Load variables from .env file
+    perenual_api_key = os.getenv("PERENUAL_API_KEY")
+    base_url = 'https://perenual.com/api/species-list?page=1&key=' + perenual_api_key
+
+    sunlight_levels = ['full_shade', 'part_shade', 'sun-part_shade', 'full_sun']
+    preference_types = ["Palm", "Orchid", "Aglaonema", "Ficus elastica", "Dracaena"]
+
+    if sunlight and sunlight in sunlight_levels:
+        base_url += '&sunlight=' + sunlight
+
+    if isinstance(low_maintenance, bool) and low_maintenance:
+        base_url += '&watering=minimum'
+
+    if preference and preference in preference_types:
+        base_url += '&q=' + preference
+
+    return base_url
+
+
 
 def filter_air_purifying(api_data, user_input):
     if isinstance(user_input, bool):
         if user_input is False:
-            return api_data
+            return api_data['data']
         elif user_input == True:
 
             air_purify_plants = {

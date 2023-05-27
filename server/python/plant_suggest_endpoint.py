@@ -1,6 +1,7 @@
 from flask import Blueprint, Flask, jsonify, request
 from plant_suggest_response import get_recommendations_data
-
+from plant_suggest_filter import get_plant_data_url
+import requests
 
 plant_suggestions = Blueprint('plant_suggestions', __name__)
 
@@ -12,20 +13,32 @@ def welcome_endpoint():
 
 @plant_suggestions.route('/suggestion', methods=['POST'])
 def get_recommendations_endpoint():
-    # Retrieve data from the request payload
-    user_input = request.json
-    # Extract the input parameters from the user_input
+    
+    user_input = request.json    
     plants = user_input['plants']
 
     # Call the get_recommendations_data function with the input parameters
     recommendations_data = get_recommendations_data(plants)
-
-    # Return the response as JSON
     response = {
         "message": "This is the sugguestion response"
-    }
-
-    # Return the recommendations data as JSON response
+    }    
     return jsonify(recommendations_data)
 
 
+@plant_suggestions.route('/filter', methods=['POST'])
+def get_plant_filter_endpoint():
+
+    user_input = request.get_json()
+    sunlight = user_input.get('sunlight')
+    low_maintenance = user_input.get('low_maintenance')
+    preference = user_input.get('preference')
+
+    url = get_plant_data_url(sunlight, low_maintenance, preference)
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        data = response.json()        
+        return jsonify(data), 200
+    else:
+        return jsonify({"error": "Unable to fetch data"}), response.status_code
