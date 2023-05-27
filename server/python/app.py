@@ -2,20 +2,12 @@
 
 import mysql.connector
 from flask import Flask, request, jsonify
-
+from connect_to_db import get_sql_connection
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-# MySQL configuration:
-mysql_config = {
-    'user': 'JiaChi_Leow',
-    'password': 'L2345678a@$%',
-    'host': '127.0.0.1',
-    'database': 'myplantfriend',
-}
-
 # Firstly, connect to MySQL db by making a MySQL connection:
-db_connection = mysql.connector.connect(**mysql_config)
+db_connection = get_sql_connection()
 db_cursor = db_connection.cursor()
 
 
