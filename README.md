@@ -25,7 +25,7 @@ The application is based on the Flask framework with some extension modules, inc
 1. clone the project
 2. create the virtual environment
 3. run ```pip install -r requirements.txt``` from your terminal
-4. create .env file
+4. create .env file under python/
     ```
     RAPID_API_URL = https://house-plants2.p.rapidapi.com/
     RAPID_API_KEY = add/your/key/here
