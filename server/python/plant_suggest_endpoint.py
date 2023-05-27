@@ -2,15 +2,15 @@ from flask import Blueprint, Flask, jsonify, request
 from plant_suggest_response import get_recommendations_data
 
 
-plant_suggestions = Blueprint('plant_suggestions', __name__)
+plant_suggestions_blueprint = Blueprint('plant_suggestions', __name__)
 
 
-@plant_suggestions.route('/home', methods=['GET'])
+@plant_suggestions_blueprint.route('/home', methods=['GET'])
 def welcome_endpoint():
     return jsonify("Welcome to PlantPal!")
 
 
-@plant_suggestions.route('/suggestion', methods=['POST'])
+@plant_suggestions_blueprint.route('/suggestion', methods=['POST'])
 def get_recommendations_endpoint():
     # Retrieve data from the request payload
     user_input = request.json
@@ -27,5 +27,3 @@ def get_recommendations_endpoint():
 
     # Return the recommendations data as JSON response
     return jsonify(recommendations_data)
-
-

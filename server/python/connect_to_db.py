@@ -1,13 +1,7 @@
 import os
 from dotenv import load_dotenv
-import requests
-
-# to load .env
-from dotenv import load_dotenv
-import os
 import mysql.connector
-import bcrypt
-import uuid
+
 # Load variables from .env file
 load_dotenv()
 
@@ -30,3 +24,12 @@ def get_sql_connection():
         auth_plugin=auth_plugin,
         database=database
     )
+
+
+def conn_exists():
+    if get_sql_connection():
+        return True
+    return False
+
+
+print(get_sql_connection())

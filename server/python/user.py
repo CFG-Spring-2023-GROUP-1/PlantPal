@@ -1,12 +1,10 @@
 from connect_to_db import get_sql_connection, DBConnectionError
-import pprint as pp
 import bcrypt
 import uuid
 
 
 class User:
     def __init__(self, first_name, last_name, email, phone_no, dob, address, password):
-        self.u_id = 'self.get_user_id()'
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -20,7 +18,6 @@ class User:
             self.address,
             self.first_name,
             self.last_name,
-            self.u_id(),
             self.email,
             self.dob,
             self.phone_no,
@@ -44,7 +41,6 @@ class User:
 
     def get_user_id(self):
         conn = None
-        print(self.email)
         try:
             conn = get_sql_connection()
             cursor = conn.cursor()
@@ -129,6 +125,7 @@ class User:
             cursor.execute(query)
             conn.commit()
             cursor.close()
+            return {**data, 'status': 'success', 'message': 'user added successfully'}
         except Exception as exc:
             raise DBConnectionError('Failed to connect to database') from exc
         finally:
@@ -158,3 +155,28 @@ class User:
         finally:
             if conn:
                 conn.close()
+
+
+user = User(
+    "Emina",
+    "Ergul",
+    "emina.ergul@example.com",
+    "+1234567890",
+    "1990-01-01",
+    "123 Main Street, City, Country",
+    "password123",
+)
+
+
+data = {
+    "FirstName": "Joanne",
+    "LastName": "Leow",
+    "Email": "feranmi.ayo@example.com",
+    "PhoneNo": "+3234567890",
+    "Dob": "1993-01-01",
+    "Address": "123 Leow Street, City, Country",
+    "Password": "password123",
+}
+
+
+print(user.add_user(data))
