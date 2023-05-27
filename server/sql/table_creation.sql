@@ -39,7 +39,7 @@ CREATE TABLE PlantDetails (
   BloomingSeason varchar(25),
   Perfume varchar(55),
   ColourOfBloom varchar(25),
-  Image varchar(255),
+  Image varchar(255)
 )
 
 -- creating a table, named 'topics' which contains all the available topics:
@@ -74,11 +74,12 @@ CREATE TABLE ratings (
 );
 
 
--- creating a table, named 'ads' which contains ad(s) info:
-CREATE TABLE ads (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
-    description TEXT,
-    image_url VARCHAR(255) NOT NULL,
-    ad_url VARCHAR(255) NOT NULL
-);
+-- user = User(
+--     "Emina",
+--     "Ergul",
+--     "emina.ergul@example.com",
+--     "+1234567890",
+--     "1990-01-01",
+--     "123 Main Street, City, Country",
+--     "password123",
+-- )

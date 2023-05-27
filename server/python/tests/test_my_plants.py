@@ -2,7 +2,8 @@ import unittest
 from unittest.mock import patch
 import sys
 sys.path.append("../")
-from main import remove_from_my_plants, replace_none, display_my_plants, display_from_user_input, search_plant
+from my_plants_main import remove_from_my_plants, replace_none, display_my_plants, display_from_user_input, search_plant
+
 
 class TestMainFunctions(unittest.TestCase):
     def test_replace_none(self):
@@ -39,7 +40,7 @@ class TestMainFunctions(unittest.TestCase):
         self.assertEqual(display_from_user_input(plant_data), expected)
 
     def test_display_myplants_empty(self):
-        with patch('main.get_all_myplants', return_value=[]):
+        with patch('my_plants_main.get_all_myplants', return_value=[]):
             with patch('builtins.print') as mock_print:
                 display_my_plants()
         mock_print.assert_called_with("Your plant collection is empty.")

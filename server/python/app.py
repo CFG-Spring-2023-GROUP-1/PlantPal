@@ -2,22 +2,15 @@
 
 import mysql.connector
 from flask import Blueprint, Flask, request, jsonify
+from connect_to_db import get_sql_connection
+my_plant_friend_blueprint = Blueprint('my_plant_friend', __name__)
 
-my_plant_friend = Blueprint('my_plant_friend', __name__)
 
 # app = Flask(__name__)
 # app.config['DEBUG'] = True
 
-# MySQL configuration:
-mysql_config = {
-    'user': 'root',
-    'password': 'admin',
-    'host': '127.0.0.1',
-    'database': 'PlantPal',
-}
-
 # Firstly, connect to MySQL db by making a MySQL connection:
-db_connection = mysql.connector.connect(**mysql_config)
+db_connection = get_sql_connection()
 db_cursor = db_connection.cursor()
 
 
@@ -32,7 +25,7 @@ class VideoNotFoundException_current_week(Exception):
 
 # Endpoint to retrieve current week's feature YT video(s) info from MySQL db:
 # Worked!
-@my_plant_friend.route('/videos/current', methods=['GET'])
+@my_plant_friend_blueprint.route('/videos/current', methods=['GET'])
 def get_current_videos():
     try:
         # Execute a SELECT query to fetch the current week's feature YT video(s) info from db:
@@ -41,7 +34,8 @@ def get_current_videos():
         rows = db_cursor.fetchall()
 
         if not rows:
-            raise VideoNotFoundException_current_week("No videos found for the current week")
+            raise VideoNotFoundException_current_week(
+                "No videos found for the current week")
 
         # Create a list to store the video(s) data:
         videos = []
@@ -71,7 +65,7 @@ class VideoTopicsNotFoundException(Exception):
 
 # Endpoint to retrieve video topics from MySQL db:
 # Worked!
-@my_plant_friend.route('/videos/topics', methods=['GET'])
+@my_plant_friend_blueprint.route('/videos/topics', methods=['GET'])
 def get_video_topics():
     try:
         # Execute a SELECT DISTINCT query to fetch all video topics from db:
@@ -80,10 +74,12 @@ def get_video_topics():
         rows = db_cursor.fetchall()
 
         # Create a list to store the topic(s) data:
-        topics = [{'name': row[0]} for row in rows]  # Convert rows into a list of dictionaries
+        # Convert rows into a list of dictionaries
+        topics = [{'name': row[0]} for row in rows]
 
         if len(topics) == 0:
-            raise VideoTopicsNotFoundException("No video topics found.", status_code=404)
+            raise VideoTopicsNotFoundException(
+                "No video topics found.", status_code=404)
 
         return jsonify({'message': 'topics fetched successfully', 'topics': topics}), 200
 
@@ -103,7 +99,7 @@ class VideosByTopicNotFoundException(Exception):
 
 # Endpoint to retrieve YT video(s)'s info by TOPICS from db:
 # Worked!
-@my_plant_friend.route('/videos/topics/<string:topic>', methods=['GET'])
+@my_plant_friend_blueprint.route('/videos/topics/<string:topic>', methods=['GET'])
 def get_videos_by_topic(topic):
     try:
         # Execute a SELECT query to fetch YT video(s) info depending on the topic from the db:
@@ -113,7 +109,8 @@ def get_videos_by_topic(topic):
         rows = db_cursor.fetchall()
 
         if not rows:
-            raise VideosByTopicNotFoundException("No videos found for this topic.")
+            raise VideosByTopicNotFoundException(
+                "No videos found for this topic.")
 
         # Create a list to store the YT video(s) data:
         videos = []
@@ -134,7 +131,7 @@ def get_videos_by_topic(topic):
 
 # Endpoint to retrieve YT video(s)'s info by date from db:
 # Worked!
-@my_plant_friend.route('/videos/all', methods=['GET'])
+@my_plant_friend_blueprint.route('/videos/all', methods=['GET'])
 def get_all_videos():
     try:
         # Execute a SELECT query to fetch YT video(s) info sorted by date from the db:
@@ -171,7 +168,7 @@ class AdsNotFetchedException(Exception):
 
 # Endpoint to retrieve ad info from db:
 # Worked!
-@my_plant_friend.route('/ads', methods=['GET'])
+@my_plant_friend_blueprint.route('/ads', methods=['GET'])
 def get_ads():
     try:
         # Execute a SELECT query to fetch all ads from the db:
@@ -201,7 +198,7 @@ def get_ads():
 
 # Endpoint for user to rate a video:
 # Worked!
-@my_plant_friend.route('/videos/<int:video_id>/rate', methods=['POST'])
+@my_plant_friend_blueprint.route('/videos/<int:video_id>/rate', methods=['POST'])
 def rate_video(video_id):
     try:
         # Prompt user for rating and comment:
@@ -225,7 +222,7 @@ def rate_video(video_id):
 
 # Endpoint to fetch video ratings and comments
 # Worked!
-@my_plant_friend.route('/videos/<int:video_id>/ratings', methods=['GET'])
+@my_plant_friend_blueprint.route('/videos/<int:video_id>/ratings', methods=['GET'])
 def get_video_ratings(video_id):
     try:
         # Retrieving ratings and comments from the database
@@ -244,4 +241,3 @@ def get_video_ratings(video_id):
 # # Run the Flask application
 # if __name__ == '__main__':
 #     app.run()
-

@@ -10,7 +10,6 @@ load_dotenv()
 api_key = os.getenv("RAPID_API_KEY")
 base_url = os.getenv("RAPID_API_URL")
 
-load_dotenv()
 
 # remove plant from My Plants that matches select_plant user input
 def remove_from_my_plants(plants):
@@ -51,6 +50,7 @@ def display_my_plants():
 def replace_none(stat):
     return stat if stat is not None else 'N/A'
 
+
 def display_from_user_input(plant_data):
     return (
         f'Latin name: {plant_data["latin_name"]}\n'
@@ -63,7 +63,7 @@ def display_from_user_input(plant_data):
         f'Growth speed: {plant_data["growth_speed"]}\n'
         f'Common diseases: {plant_data["common_diseases"]}\n'
         f'Image: {plant_data["image"]}\n'
-        )
+    )
 
 
 # if common_diseases in plant_data is not none, ask for user input on plant disease
@@ -73,7 +73,8 @@ def ask_disease(plant_data):
     else:
         common_diseases = plant_data['common_diseases']
         while True:
-            user_input_disease = input(f'Does your plant currently have any disease? Choose from: {common_diseases}, or enter "none".')
+            user_input_disease = input(
+                f'Does your plant currently have any disease? Choose from: {common_diseases}, or enter "none".')
             if user_input_disease.lower() == 'none':
                 return False
             elif user_input_disease.lower() in common_diseases.lower():
@@ -145,6 +146,3 @@ def search_plant():
 
 if __name__ == '__main__':
     search_plant()
-
-
-
