@@ -10,10 +10,10 @@
 
 # Framework
 The application is based on the Flask framework with some extension modules, including:
-## Security: 
+### Security: 
 1. ***python-dotenv*** used to securely store keys and passwords.
 2. ***bcrypt*** used for password hashing and encryption.
-## DataBase:
+### DataBase:
 1. ***mysql-connector-python***
 
 # Testing
@@ -27,19 +27,20 @@ The application is based on the Flask framework with some extension modules, inc
 3. run ```pip install -r requirements.txt``` from your terminal
 4. create .env file
     ```
-        RAPID_API_URL = https://house-plants2.p.rapidapi.com/
-        RAPID_API_KEY = add/your/key/here
-        PERENUAL_API_KEY = add/your/key/here
-        USER = root
-        PASSWORD = add/your/password/here
-        HOST = 127.0.0.1
-        PLUGIN = mysql_native_password
-        DB = plantpal
+    RAPID_API_URL = https://house-plants2.p.rapidapi.com/
+    RAPID_API_KEY = add/your/key/here
+    PERENUAL_API_KEY = add/your/key/here
+    USER = root
+    PASSWORD = add/your/password/here
+    HOST = 127.0.0.1
+    PLUGIN = mysql_native_password
+    DB = plantpal
     ```
 ### Database
-1. Open MySQL workbench
-2. create database and table by server\sql\table_creation.sql
-3. insert data by server\sql\insert_to_db.sql
+1. Open MySQL Workbench.
+2. Create the database and table by executing the SQL script sql\table_creation.sql.
+3. Insert data into the table using the SQL script sql\insert_to_db.sql.
+Please ensure that you have MySQL Workbench installed and that the SQL scripts mentioned above are available in the specified paths.
 
 ### Local Running
 1. Start app
