@@ -6,7 +6,7 @@ from connect_to_db import get_sql_connection
 my_plant_friend_blueprint = Blueprint('my_plant_friend', __name__)
 
 
-# app = Flask(__name__)
+app = Flask(__name__)
 # app.config['DEBUG'] = True
 
 # Firstly, connect to MySQL db by making a MySQL connection:
