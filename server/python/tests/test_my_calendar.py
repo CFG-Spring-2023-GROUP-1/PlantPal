@@ -1,9 +1,12 @@
 import unittest
 from unittest import TestCase, main
 from unittest.mock import patch
+from datetime import datetime, timedelta
+import sys
+sys.path.append("../")
 import my_calendar_functions
 from my_calendar import Plant, WateringCalendar
-from datetime import datetime, timedelta
+
 
 """Calendar tests"""
 
@@ -37,7 +40,7 @@ class CalendarTests(TestCase):
             my_calendar_functions.date_to_water("Monstera", datetime(2023, 5, 20), 7),
             f"You should next water your Monstera on {water_due}.")
         self.assertNotEqual(my_calendar_functions.date_to_water("Rose", datetime(2023, 5, 20), 14),
-            f"You should next water your Rose on {water_due}.")
+            f"You should next water your Rose on {water_due}.")   
 
     def test_days_since_watered(self):
         last_watered = datetime.today() - timedelta(days=1)

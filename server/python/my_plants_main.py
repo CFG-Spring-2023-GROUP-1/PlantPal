@@ -10,8 +10,6 @@ load_dotenv()
 api_key = os.getenv("RAPID_API_KEY")
 base_url = os.getenv("RAPID_API_URL")
 
-load_dotenv()
-
 
 # remove plant from My Plants that matches select_plant user input
 def remove_from_my_plants(plants):

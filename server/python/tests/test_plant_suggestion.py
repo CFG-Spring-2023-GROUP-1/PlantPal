@@ -1,6 +1,8 @@
 import unittest
 import os
 from unittest.mock import patch
+import sys
+sys.path.append("../")
 from plant_suggest_filter import house_plants_api, filter_sunlight, low_maintanance, preference, filter_air_purifying
 
 
