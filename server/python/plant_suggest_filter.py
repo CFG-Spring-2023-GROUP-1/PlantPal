@@ -1,38 +1,35 @@
-from dotenv import load_dotenv # to load .env
+from dotenv import load_dotenv  # to load .env
 import os, json
 
 
 def house_plants_api():
-
-    load_dotenv() # Load variables from .env file
+    load_dotenv()  # Load variables from .env file
     perenual_api_key = os.getenv("PERENUAL_API_KEY")
-    base_URL= 'https://perenual.com/api/species-list?page=1&key=' + perenual_api_key
+    base_URL = 'https://perenual.com/api/species-list?page=1&key=' + perenual_api_key
     return base_URL
 
 
-def filter_sunlight(url,sunlight):
-
+def filter_sunlight(url, sunlight):
     if sunlight in ['full_shade', 'part_shade', 'sun-part_shade', 'full_sun']:
-        return url+ '&sunlight=' + sunlight
-    elif sunlight == '' or sunlight == None:
+        return url + '&sunlight=' + sunlight
+    elif sunlight == '' or sunlight is None:
         return url
     else:
         print('Please enter a valid sunlight level: full_shade, part_shade, sun-part_shade, full_sun')
-        
 
-def low_maintanance(url,user_input):
 
+def low_maintanance(url, user_input):
     if isinstance(user_input, bool):
-        if user_input == True:
-            return url+ '&watering=minimum'
-        elif user_input == False:
-            return url 
-        
+        if user_input:
+            return url + '&watering=minimum'
+        elif not user_input:
+            return url
+
     else:
         raise ValueError("Invalid input. Expected a boolean value.")
-    
-def preference(url,user_preference):
 
+
+def preference(url, user_preference):
     preference_type = [
         "Palm",
         "Orchid",
@@ -47,17 +44,14 @@ def preference(url,user_preference):
         return url
 
 
-
-
-def filter_air_purifying(api_data,user_input):
-
+def filter_air_purifying(api_data, user_input):
     if isinstance(user_input, bool):
         if user_input is False:
             return api_data
         elif user_input == True:
 
             air_purify_plants = {
-                "Abies alba", #this is for testing purposes
+                "Abies alba",  # this is for testing purposes
                 "Dypsis lutescens",
                 "Chlorophytum comosum",
                 "Epipremnum aureum",
@@ -100,7 +94,6 @@ def filter_air_purifying(api_data,user_input):
                 return matched_items
             else:
                 print("None of the plant names exist in the JSON data.")
-        
+
     else:
         raise ValueError("Invalid input. Expected a boolean value.")
-

@@ -2,20 +2,12 @@
 
 import mysql.connector
 from flask import Flask, request, jsonify
-
+from connect_to_db import get_sql_connection
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-# MySQL configuration:
-mysql_config = {
-    'user': 'JiaChi_Leow',
-    'password': 'L2345678a@$%',
-    'host': '127.0.0.1',
-    'database': 'myplantfriend',
-}
-
 # Firstly, connect to MySQL db by making a MySQL connection:
-db_connection = mysql.connector.connect(**mysql_config)
+db_connection = get_sql_connection()
 db_cursor = db_connection.cursor()
 
 
@@ -39,7 +31,8 @@ def get_current_videos():
         rows = db_cursor.fetchall()
 
         if not rows:
-            raise VideoNotFoundException_current_week("No videos found for the current week")
+            raise VideoNotFoundException_current_week(
+                "No videos found for the current week")
 
         # Create a list to store the video(s) data:
         videos = []
@@ -78,10 +71,12 @@ def get_video_topics():
         rows = db_cursor.fetchall()
 
         # Create a list to store the topic(s) data:
-        topics = [{'name': row[0]} for row in rows]  # Convert rows into a list of dictionaries
+        # Convert rows into a list of dictionaries
+        topics = [{'name': row[0]} for row in rows]
 
         if len(topics) == 0:
-            raise VideoTopicsNotFoundException("No video topics found.", status_code=404)
+            raise VideoTopicsNotFoundException(
+                "No video topics found.", status_code=404)
 
         return jsonify({'message': 'topics fetched successfully', 'topics': topics}), 200
 
@@ -111,7 +106,8 @@ def get_videos_by_topic(topic):
         rows = db_cursor.fetchall()
 
         if not rows:
-            raise VideosByTopicNotFoundException("No videos found for this topic.")
+            raise VideosByTopicNotFoundException(
+                "No videos found for this topic.")
 
         # Create a list to store the YT video(s) data:
         videos = []
@@ -242,4 +238,3 @@ def get_video_ratings(video_id):
 # Run the Flask application
 if __name__ == '__main__':
     app.run()
-

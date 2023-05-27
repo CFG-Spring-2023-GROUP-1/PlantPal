@@ -1,4 +1,4 @@
-from user_db import get_sql_connection, DBConnectionError
+from connect_to_db import get_sql_connection, DBConnectionError
 import pprint as pp
 import bcrypt
 import uuid
@@ -158,24 +158,3 @@ class User:
         finally:
             if conn:
                 conn.close()
-
-# user = User(
-#     "Emina",
-#     "Ergul",
-#     "emina.ergul@example.com",
-#     "+1234567890",
-#     "1990-01-01",
-#     "123 Main Street, City, Country",
-#     "password123",
-# )
-#
-# data = {
-#     "FirstName": "Rinsola",
-#     "LastName": "Olatunji",
-#     "Email": "feranmi.ayo@example.com",
-#     "PhoneNo": "+2234567890",
-#     "Dob": "1992-01-01",
-#     "Address": "123 Tops Street, City, Country",
-#     "Password": "password1234",
-# }
-# pp.pprint(user.does_user_exist(data))

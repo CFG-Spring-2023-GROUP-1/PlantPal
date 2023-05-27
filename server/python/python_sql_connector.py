@@ -1,32 +1,12 @@
 import mysql.connector
 import json
+from connect_to_db import get_sql_connection as connect_to_plantpal_db
 
-USER = 'root'
-PASSWORD = 'Dylan28megan'
-HOST = '127.0.0.1'
-
-
-# CONNECT TO DB
-def connect_to_plantpal_db(db_name):
-    connection = mysql.connector.connect(
-        host=HOST,
-        user=USER,
-        password=PASSWORD,
-        auth_plugin='mysql_native_password',
-        database=db_name
-    )
-    return connection
-
-# TEST DB CONNECTION
-# db_connection = connect_to_plantpal_db('PlantPal')
-# cur = db_connection.cursor()
-# print('connected to PlantPal')
 
 # GET ALL MY PLANTS RECORDS
 def get_all_myplants():
     try:
-        db_name = 'PlantPal'
-        db_connection = connect_to_plantpal_db(db_name)
+        db_connection = connect_to_plantpal_db()
         cur = db_connection.cursor()
 
         cur.execute('SELECT * FROM PlantDetails')
@@ -44,8 +24,7 @@ def get_all_myplants():
 
 def add_plant(data, plant_id, user_input_disease):
     try:
-        db_name = 'PlantPal'
-        db_connection = connect_to_plantpal_db(db_name)
+        db_connection = connect_to_plantpal_db()
         cur = db_connection.cursor()
         print('connected to PlantPal')
 
@@ -58,12 +37,15 @@ def add_plant(data, plant_id, user_input_disease):
         leaf_colour_str = ', '.join(data['Color of leaf'])
 
         cur.execute(insert_qry, (plant_id, data['Categories'], data['Latin name'], common_names_str, data['Light tolered'], data['Watering'],
-                                 data['Climat'], json.dumps(data['Temperature max']), json.dumps(data['Temperature min']), data['Growth'],
-                                 data['Disease'], user_input_disease, leaf_colour_str, data['Blooming season'], data['Perfume'], data['Color of blooms'],
+                                 data['Climat'], json.dumps(data['Temperature max']), json.dumps(
+                                     data['Temperature min']), data['Growth'],
+                                 data['Disease'], user_input_disease, leaf_colour_str, data[
+                                     'Blooming season'], data['Perfume'], data['Color of blooms'],
                                  data['Img']))
 
         db_connection.commit()
-        print(f"You've added {'/'.join(data['Common name'])} ({data['Latin name']}) to your plant collection!")
+        print(
+            f"You've added {'/'.join(data['Common name'])} ({data['Latin name']}) to your plant collection!")
         cur.close()
     except mysql.connector.Error as err:
         print(f'Error. Unable to add {data["Latin name"]}:', err)
@@ -76,11 +58,11 @@ def add_plant(data, plant_id, user_input_disease):
 
 def remove_plant(plant_name):
     try:
-        db_name = 'PlantPal'
-        db_connection = connect_to_plantpal_db(db_name)
+        db_connection = connect_to_plantpal_db()
         cur = db_connection.cursor()
 
-        cur.execute('DELETE FROM PlantDetails WHERE LatinName = %s', (plant_name,))
+        cur.execute(
+            'DELETE FROM PlantDetails WHERE LatinName = %s', (plant_name,))
         db_connection.commit()
 
         if cur.rowcount > 0:
