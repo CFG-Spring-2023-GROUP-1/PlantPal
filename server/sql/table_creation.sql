@@ -74,12 +74,13 @@ CREATE TABLE ratings (
 );
 
 
--- user = User(
---     "Emina",
---     "Ergul",
---     "emina.ergul@example.com",
---     "+1234567890",
---     "1990-01-01",
---     "123 Main Street, City, Country",
---     "password123",
--- )
+-- create table ads
+
+CREATE TABLE ads (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(255) NOT NULL,
+    ad_url VARCHAR(255) NOT NULL
+);
+
