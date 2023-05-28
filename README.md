@@ -45,7 +45,6 @@ React and Typescript, Tailwind, axios.
 and run ```pip install -r requirements.txt``` from your terminal to install dependencies
 
 2.   Create .env file 
-
     ```
     RAPID_API_URL = https://house-plants2.p.rapidapi.com/  
     RAPID_API_KEY = add/your/key/here  
