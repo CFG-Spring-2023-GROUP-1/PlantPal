@@ -22,7 +22,7 @@ def get_sql_connection():
         user=user,
         password=password,
         auth_plugin=auth_plugin,
-        database=database
+        database=database,
     )
 
 
@@ -30,6 +30,3 @@ def conn_exists():
     if get_sql_connection():
         return True
     return False
-
-
-print(get_sql_connection())
