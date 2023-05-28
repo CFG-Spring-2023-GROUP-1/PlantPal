@@ -72,7 +72,7 @@ and run ```pip install -r requirements.txt``` from your terminal to install depe
 ### Frontend
 1. cd into the ``` client ``` directory and run ```yarn install```  to install dependencies
 
-2.   create .env file      
+2. create .env file      
 
     ``` 
     REACT_APP_RAPID_API_URL=https://house-plants2.p.rapidapi.com/  
