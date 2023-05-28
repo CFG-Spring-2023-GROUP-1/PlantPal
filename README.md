@@ -45,15 +45,15 @@ React and Typescript, Tailwind, axios.
 and run ```pip install -r requirements.txt``` from your terminal to install dependencies
 
 2.   Create .env file 
-    ```
-    RAPID_API_URL = https://house-plants2.p.rapidapi.com/
-    RAPID_API_KEY = add/your/key/here
-    PERENUAL_API_KEY = add/your/key/here
-    USER = root
-    PASSWORD = add/your/password/here
-    HOST = 127.0.0.1
-    PLUGIN = mysql_native_password
-    DB = plantpal
+    ```  
+    RAPID_API_URL = https://house-plants2.p.rapidapi.com/  
+    RAPID_API_KEY = add/your/key/here  
+    PERENUAL_API_KEY = add/your/key/here  
+    USER = root  
+    PASSWORD = add/your/password/here  
+    HOST = 127.0.0.1  
+    PLUGIN = mysql_native_password  
+    DB = plantpal  
     ```
 3.   Start app
     - open blueprint.py and click run in IDEs
@@ -71,11 +71,11 @@ and run ```pip install -r requirements.txt``` from your terminal to install depe
 1. cd into the ``` client ``` directory and run ```yarn install```  to install dependencies
 
 2.   create .env file 
-    ```
-    REACT_APP_RAPID_API_URL=https://house-plants2.p.rapidapi.com/
-    REACT_APP_RAPID_API_KEY=Your_Api_Key
-    REACT_APP_RAPID_HOST= house-plants2.p.rapidapi.com
-    REACT_APP_BASE_URL = http://127.0.0.1:5000/
+    ```  
+    REACT_APP_RAPID_API_URL=https://house-plants2.p.rapidapi.com/  
+    REACT_APP_RAPID_API_KEY=Your_Api_Key  
+    REACT_APP_RAPID_HOST= house-plants2.p.rapidapi.com  
+    REACT_APP_BASE_URL = http://127.0.0.1:5000/  
     ```
 
 3. Run ```yarn start``` to start project locally
