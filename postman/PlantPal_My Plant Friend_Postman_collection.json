@@ -1,0 +1,246 @@
+{
+	"info": {
+		"_postman_id": "4938d212-d1c0-4c6e-a07c-6ebee2febf15",
+		"name": "PlantPal_My Plant Friend_Postman_collection.json",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27613676",
+		"_collection_link": "https://galactic-equinox-161283.postman.co/workspace/Team-Workspace~872a02c7-514d-413c-805c-bce97e722276/collection/27613676-4938d212-d1c0-4c6e-a07c-6ebee2febf15?action=share&creator=27613676&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Get Current Videos",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/current",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"current"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Video Topics",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/topics",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Video By Topic ",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/topics/Repotting",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"topics",
+						"Repotting"
+					]
+				},
+				"description": "The topic, in this case = Repotting"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Videos (Newest to Oldest)",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/all",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Ads",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:5000/ads",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"ads"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Rating and Comment ",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rating\": 2,\r\n  \"comment\": \"This video could be much better.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/10/rate",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"10",
+						"rate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Rating and Comment",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true,
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"rating\": 2,\r\n  \"comment\": \"This video could be much better.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/videos/10/ratings",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"videos",
+						"10",
+						"ratings"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
