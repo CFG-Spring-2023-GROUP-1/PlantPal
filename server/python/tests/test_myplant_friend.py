@@ -1,6 +1,4 @@
 # this is the unit test file for 'My Plant Friend' feature:
-from app import app, VideoNotFoundException_current_week, VideoTopicsNotFoundException, VideosByTopicNotFoundException, \
-    AdsNotFetchedException
 import unittest
 from unittest.mock import patch
 from unittest import TestCase, mock
@@ -9,7 +7,9 @@ import json
 import sys
 sys.path.append("../")
 # Unit tests for current week videos :
-
+from app import VideoNotFoundException_current_week, VideoTopicsNotFoundException, VideosByTopicNotFoundException, \
+    AdsNotFetchedException
+from blueprint import app
 
 class VideoEndpointsTestCase(unittest.TestCase):
     def setUp(self):

@@ -25,7 +25,7 @@ def get_recommendations_endpoint():
     return jsonify(recommendations_data)
 
 
-@plant_suggestions.route('/filter', methods=['POST'])
+@plant_suggestions_blueprint.route('/filter', methods=['POST'])
 def get_plant_filter_endpoint():
 
     user_input = request.get_json()
