@@ -45,7 +45,8 @@ React and Typescript, Tailwind, axios.
 and run ```pip install -r requirements.txt``` from your terminal to install dependencies
 
 2.   Create .env file 
-    ```
+
+    ~~~
     RAPID_API_URL = https://house-plants2.p.rapidapi.com/  
     RAPID_API_KEY = add/your/key/here  
     PERENUAL_API_KEY = add/your/key/here  
@@ -54,7 +55,7 @@ and run ```pip install -r requirements.txt``` from your terminal to install depe
     HOST = 127.0.0.1  
     PLUGIN = mysql_native_password  
     DB = plantpal  
-    ```
+    ~~~
 
 3.   Start app
     - open blueprint.py and click run in IDEs
