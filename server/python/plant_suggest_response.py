@@ -59,9 +59,9 @@ def get_recommendations_data(plants):
             }
             recommendations.append(recommendation)
 
-        return json.dumps(recommendations)
+        return recommendations
     else:
-        return json.dumps([])
+        return []
 
 
 """Depreciated User input app"""

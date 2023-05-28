@@ -19,10 +19,25 @@ def get_recommendations_endpoint():
 
     # Call the get_recommendations_data function with the input parameters
     recommendations_data = get_recommendations_data(plants)
-    response = {
-        "message": "This is the sugguestion response"
-    }
-    return jsonify(recommendations_data)
+    if not recommendations_data:
+        response = {
+            "message": "No recommended plants found."
+        }
+    else:
+        formatted_data = []
+        for recommendation in recommendations_data:
+            formatted_recommendation = {
+                "recommendation_number": recommendation["recommendation_number"],
+                "common_name": recommendation["common_name"],
+                "image_url": recommendation["image_url"]
+            }
+            formatted_data.append(formatted_recommendation)
+        
+        response = {
+            "message": "This is the suggestion response",
+            "data": formatted_data
+        }
+    return jsonify(response), 200
 
 
 @plant_suggestions_blueprint.route('/filter', methods=['POST'])
