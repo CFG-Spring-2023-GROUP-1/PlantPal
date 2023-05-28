@@ -7,7 +7,6 @@
 
 
 ---
-
 # Framework
 The application is based on the Flask framework with some extension modules, including:
 ### Security: 
@@ -18,8 +17,9 @@ The application is based on the Flask framework with some extension modules, inc
 
 # Testing
 1. ***unittest*** A suite of unit tests has been created and the files are stored in the /tests folder.
-
-
+Go to python/ and run ``` python -m unittest discover -s tests/ ```
+note: need to input nessary date accordingly
+1. ***postman*** run endpoints
 # Enviromenet Setup
 ### Local Set up
 1. clone the project
